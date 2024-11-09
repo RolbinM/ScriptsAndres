@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS [dbo].[TipoTCM];
 DROP TABLE IF EXISTS [dbo].[Error];
 DROP TABLE IF EXISTS [dbo].[DBError];
 
-DROP PROCEDURE IF EXISTS [dbo].[InsertarLoteMovimientos]
+DROP PROCEDURE IF EXISTS [dbo].[SP_InsertarLoteMovimientos]
 DROP TYPE IF EXISTS [dbo].[MovimientoVariable];
 
 -- Tabla de tipos de tarjeta cuenta maestra
@@ -229,5 +229,6 @@ INSERT INTO Error VALUES
 	, (50018, 'Fecha de vencimiento de TF no se encontro.')
 	, (50019, 'Id de TF no se encontro.')
 	, (50020, 'No existe TCM a la que asociar la TCA.')
+	, (50021, 'No existe la TF buscada o esta inactiva.')
 
 ------------------------------------------------------------------------------------
