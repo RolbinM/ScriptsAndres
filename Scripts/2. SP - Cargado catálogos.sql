@@ -151,5 +151,12 @@ END
 
 
 /*
+ANDRES
 EXEC CargarCatalogosXML @outResultCode=50008, @inRutaXML='C:\Users\AndresMFIT\OneDrive\Principal\Universidad\Semestre II 2024\BD1\Tarea 3\BDI-T3\Resources\CatalogosFinal.xml';
+
+FOFO
+EXEC CargarCatalogosXML @outResultCode=50008, @inRutaXML='C:\Users\AndresMFIT\OneDrive\Principal\Universidad\Semestre II 2024\BD1\Tarea 3\BDI-T3\Resources\CatalogosFinal.xml';
+
+ROLBIN
+EXEC CargarCatalogosXML @outResultCode=50008, @inRutaXML='C:\CatalogosFinal.xml';
 */

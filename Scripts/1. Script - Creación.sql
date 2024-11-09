@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS [dbo].[TipoRN];
 DROP TABLE IF EXISTS [dbo].[TipoTCM];
 DROP TABLE IF EXISTS [dbo].[Error];
 DROP TABLE IF EXISTS [dbo].[DBError];
-
+DROP TYPE IF EXISTS [dbo].[MovimientoVariable];
 
 -- Tabla de tipos de tarjeta cuenta maestra
 CREATE TABLE TipoTCM ( 
@@ -185,6 +185,23 @@ CREATE TABLE DBError (
     , [Message] NVARCHAR(255)
     , [DateTime] DATETIME NOT NULL
 );
+GO
+
+---Tablas Variables-------------------------------------------------------------------
+CREATE TYPE dbo.MovimientoVariable AS TABLE (
+    FechaOperacion DATETIME,
+    Nombre VARCHAR(100),
+    TF VARCHAR(100),
+    FechaMovimiento DATETIME,
+    Monto DECIMAL(28,8),
+    Descripcion VARCHAR(200),
+    Referencia VARCHAR(100)
+);
+GO
+--------------------------------------------------------------------------------
+
+
+
 
 CREATE TABLE Error ( -------------------------------------------------------------
     id INT PRIMARY KEY IDENTITY(1,1)

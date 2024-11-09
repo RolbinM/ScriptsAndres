@@ -38,5 +38,5 @@ BEGIN
 END
 
 /*
-EXEC SP_ConsultarError @inCodigoError = 31213212;
+EXEC SP_ConsultarError @inCodigoError = 50008;
 */

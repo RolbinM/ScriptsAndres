@@ -51,16 +51,9 @@ BEGIN
 				CCV VARCHAR(25)
 			)
 
-			DECLARE @Movimiento TABLE (
-				FechaOperacion DATETIME,
-				Nombre VARCHAR(100),
-				TF VARCHAR(100),
-				FechaMovimiento DATETIME,
-				Monto DECIMAL(28,8),
-				Descripcion VARCHAR(200),
-				Referencia VARCHAR(100)
-			)
+			DECLARE @Movimiento dbo.MovimientoVariable
 
+			DECLARE @MovimientoVariable dbo.MovimientoVariable
 
 
 
@@ -231,6 +224,11 @@ BEGIN
 				CLOSE NTHCursor;
 				DEALLOCATE NTHCursor;
 
+
+
+
+
+
 				-- Iterar sobre la tabla @NTCM para cada FechaOperacion
 				DECLARE NTCMCursor CURSOR FOR
 					SELECT Codigo, TipoTCM, LimiteCredito, TH
@@ -250,6 +248,10 @@ BEGIN
 
 				CLOSE NTCMCursor;
 				DEALLOCATE NTCMCursor;
+
+
+
+
 
 				-- Iterar sobre la tabla @NTCA para cada FechaOperacion
 				DECLARE NTACursor CURSOR FOR
@@ -271,6 +273,10 @@ BEGIN
 				CLOSE NTACursor;
 				DEALLOCATE NTACursor;
 
+
+
+
+
 				-- Iterar sobre la tabla @NTF para cada FechaOperacion
 				DECLARE NTFCursor CURSOR FOR
 					SELECT Codigo, TCAsociada, FechaVencimiento, CCV
@@ -291,25 +297,21 @@ BEGIN
 				CLOSE NTFCursor;
 				DEALLOCATE NTFCursor;
 
-				-- Iterar sobre la tabla @Movimiento para cada FechaOperacion
-				DECLARE MovimientoCursor CURSOR FOR
-					SELECT Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
-					FROM @Movimiento
-					WHERE FechaOperacion = @FechaOperacion;
 
-				OPEN MovimientoCursor;
-				FETCH NEXT FROM MovimientoCursor INTO @Nombre, @TF, @FechaMovimiento, @Monto, @Descripcion, @Referencia;
 
-				WHILE @@FETCH_STATUS = 0
-				BEGIN
-					-- Llamar al procedimiento almacenado para cada fila de @Movimiento
-					EXEC dbo.SP_InsertarNuevoMovimiento @Nombre, @TF, @FechaMovimiento, @Monto, @Descripcion, @Referencia, 0;
 
-					FETCH NEXT FROM MovimientoCursor INTO @Nombre, @TF, @FechaMovimiento, @Monto, @Descripcion, @Referencia;
-				END
 
-				CLOSE MovimientoCursor;
-				DEALLOCATE MovimientoCursor;
+				-- Sacamos el lote de movimientos de la fechaOperacion
+				
+				INSERT INTO @MovimientoVariable(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
+				SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
+				FROM @Movimiento
+				WHERE FechaOperacion = @FechaOperacion;
+
+				--EXEC dbo.SP_InsertarNuevoMovimiento @Nombre, @TF, @FechaMovimiento, @Monto, @Descripcion, @Referencia, 0;
+
+				DELETE FROM @MovimientoVariable
+
 
 				FETCH NEXT FROM FechaOperacionCursor INTO @FechaOperacion;
 			END
@@ -351,5 +353,12 @@ BEGIN
 END
 
 /*
+ANDRES
 EXEC CargarOperacionesXML @outResultCode=50008, @inRutaXML='C:\Users\AndresMFIT\OneDrive\Principal\Universidad\Semestre II 2024\BD1\Tarea 3\BDI-T3\Resources\OperacionesFinal.xml';
+
+FOFO
+EXEC CargarOperacionesXML @outResultCode=50008, @inRutaXML='C:\Users\AndresMFIT\OneDrive\Principal\Universidad\Semestre II 2024\BD1\Tarea 3\BDI-T3\Resources\OperacionesFinal.xml';
+
+ROLBINCITO
+EXEC CargarOperacionesXML @outResultCode=50008, @inRutaXML='C:\OperacionesFinal.xml';
 */
