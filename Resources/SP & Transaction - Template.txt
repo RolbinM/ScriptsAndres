@@ -1,0 +1,42 @@
+# Template de SPs o Transactions
+
+CREATE OR ALTER PROCEDURE SP_ACCION
+(
+	@inVariable
+	@outResultCode INT OUTPUT
+)
+AS
+BEGIN
+	SET NOCOUNT ON;
+	BEGIN TRY
+		SET @outResultCode = 0;
+		BEGIN TRANSACTION <Nombre>;
+
+
+
+
+
+		COMMIT TRANSACTION <Nombre>;
+		PRINT 'Resultado: ' + CAST(@outResultCode AS NVARCHAR(10));
+	END TRY
+
+	BEGIN CATCH
+		IF @@TRANCOUNT > 0
+		BEGIN
+			ROLLBACK TRANSACTION <Nombre>;
+		END
+		SET @outResultCode = 50008; -- Error en base de datos
+		INSERT INTO [dbo].[DBError] VALUES (
+			SUSER_NAME()
+			, ERROR_NUMBER()
+			, ERROR_STATE()
+			, ERROR_SEVERITY()
+			, ERROR_LINE()
+			, ERROR_PROCEDURE()
+			, ERROR_MESSAGE()
+			, GETDATE()
+			);
+		SELECT @outResultCode AS outResultCode;
+	END CATCH
+	SET NOCOUNT OFF;
+END

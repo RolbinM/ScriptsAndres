@@ -1,0 +1,107 @@
+<root>
+   <TTCM>
+      <TTCM Nombre="Corporativo" />
+      <TTCM Nombre="Platino" />
+      <TTCM Nombre="Oro" />
+   </TTCM>
+   <TRN>
+      <TRN Nombre="Porcentaje" tipo="real" />
+      <TRN Nombre="Cantidad de Dias" tipo="Entero" />
+      <TRN Nombre="Cantidad de Operaciones" tipo="Entero" />
+      <TRN Nombre="Monto Monetario" tipo="Money" />
+	  <TRN Nombre="Cantidad de Meses de Financiamiento" tipo="Entero" />
+   </TRN>
+   <RN>
+	  <RN Nombre="Maximo limite credito" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="10.000.000" />
+      <RN Nombre="Tasa de interes corriente" TTCM="Corporativo" TipoRN="Porcentaje" Valor="4" />
+      <RN Nombre="intereses moratorios" TTCM="Corporativo" TipoRN="Porcentaje" Valor="6" />
+      <RN Nombre="Cargos Servicio Mensual TCM" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="5000" />
+      <RN Nombre="Cargos Servicio Mensual TCA" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="3000" />
+      <RN Nombre="Plazo para Pagar" TTCM="Corporativo" TipoRN="Cantidad de Dias" Valor="8" />
+      <RN Nombre="Reposicion de tarjeta de TCM" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="5000" />
+      <RN Nombre="Reposicion de tarjeta de TCA" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="4000" />
+      <RN Nombre="Cargo Seguro Contra Fraudes" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="6000" />
+      <RN Nombre="Cargo renovacion de TF de TCM" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="5000" />
+      <RN Nombre="Cargo renovacion de TF de TCA" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="4000" />
+      <RN Nombre="Cantidad de operaciones en ATM" TTCM="Corporativo" TipoRN="Cantidad de Operaciones" Valor="10" />
+      <RN Nombre="Cantidad de operacion en Ventanilla" TTCM="Corporativo" TipoRN="Cantidad de Operaciones" Valor="8" />
+      <RN Nombre="Multa exceso de operaciones ATM" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="3000" />
+      <RN Nombre="Multa exceso de operaciones Ventanilla" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="2800" />
+      <RN Nombre="Cantidad de dias para pago saldo de contado" TTCM="Corporativo" TipoRN="Cantidad de Dias" Valor="15" />
+	  <RN Nombre="Cantidad de cuotas para pago minimo" TTCM="Corporativo" TipoRN="Cantidad de Meses de Financiamiento" Valor="6" />
+      <RN Nombre="Maximo limite credito" TTCM="Platino" TipoRN="Monto Monetario" Valor="7.000.000" />
+      <RN Nombre="Tasa de interes corriente" TTCM="Platino" TipoRN="Porcentaje" Valor="4" />
+      <RN Nombre="intereses moratorios" TTCM="Platino" TipoRN="Porcentaje" Valor="5" />
+      <RN Nombre="Cargos Servicio Mensual TCM" TTCM="Platino" TipoRN="Monto Monetario" Valor="4500" />
+      <RN Nombre="Cargos Servicio Mensual TCA" TTCM="Platino" TipoRN="Monto Monetario" Valor="2500" />
+      <RN Nombre="Plazo para Pagar" TTCM="Platino" TipoRN="Cantidad de Dias" Valor="6" />
+      <RN Nombre="Reposicion de tarjeta de TCM" TTCM="Platino" TipoRN="Monto Monetario" Valor="4500" />
+      <RN Nombre="Reposicion de tarjeta de TCA" TTCM="Platino" TipoRN="Monto Monetario" Valor="3500" />
+      <RN Nombre="Cargo Seguro Contra Fraudes" TTCM="Platino" TipoRN="Monto Monetario" Valor="5000" />
+      <RN Nombre="Cargo renovacion de TF de TCM" TTCM="Platino" TipoRN="Monto Monetario" Valor="4500" />
+      <RN Nombre="Cargo renovacion de TF de TCA" TTCM="Platino" TipoRN="Monto Monetario" Valor="3500" />
+      <RN Nombre="Cantidad de operaciones en ATM" TTCM="Platino" TipoRN="Cantidad de Operaciones" Valor="8" />
+      <RN Nombre="Cantidad de operacion en Ventanilla" TTCM="Platino" TipoRN="Cantidad de Operaciones" Valor="6" />
+      <RN Nombre="Multa exceso de operaciones ATM" TTCM="Platino" TipoRN="Monto Monetario" Valor="2500" />
+      <RN Nombre="Multa exceso de operaciones Ventanilla" TTCM="Platino" TipoRN="Monto Monetario" Valor="2400" />
+      <RN Nombre="Cantidad de dias para pago saldo de contado" TTCM="Platino" TipoRN="Cantidad de Dias" Valor="10" />
+	  <RN Nombre="Cantidad de cuotas para pago minimo" TTCM="Platino" TipoRN="Cantidad de Meses de Financiamiento" Valor="10" />
+      <RN Nombre="Maximo limite credito" TTCM="Oro" TipoRN="Monto Monetario" Valor="5.000.000" />
+      <RN Nombre="Tasa de interes corriente" TTCM="Oro" TipoRN="Porcentaje" Valor="3.5" />
+      <RN Nombre="intereses moratorios" TTCM="Oro" TipoRN="Porcentaje" Valor="5" />
+      <RN Nombre="Cargos Servicio Mensual TCM" TTCM="Oro" TipoRN="Monto Monetario" Valor="4000" />
+      <RN Nombre="Cargos Servicio Mensual TCA" TTCM="Oro" TipoRN="Monto Monetario" Valor="2000" />
+      <RN Nombre="Plazo para Pagar" TTCM="Oro" TipoRN="Cantidad de Dias" Valor="6" />
+      <RN Nombre="Reposicion de tarjeta de TCM" TTCM="Oro" TipoRN="Monto Monetario" Valor="4000" />
+      <RN Nombre="Reposicion de tarjeta de TCA" TTCM="Oro" TipoRN="Monto Monetario" Valor="3000" />
+      <RN Nombre="Cargo Seguro Contra Fraudes" TTCM="Oro" TipoRN="Monto Monetario" Valor="4000" />
+      <RN Nombre="Cargo renovacion de TF de TCM" TTCM="Oro" TipoRN="Monto Monetario" Valor="4000" />
+      <RN Nombre="Cargo renovacion de TF de TCA" TTCM="Oro" TipoRN="Monto Monetario" Valor="3000" />
+      <RN Nombre="Cantidad de operaciones en ATM" TTCM="Oro" TipoRN="Cantidad de Operaciones" Valor="7" />
+      <RN Nombre="Cantidad de operacion en Ventanilla" TTCM="Oro" TipoRN="Cantidad de Operaciones" Valor="5" />
+      <RN Nombre="Multa exceso de operaciones ATM" TTCM="Oro" TipoRN="Monto Monetario" Valor="2000" />
+      <RN Nombre="Multa exceso de operaciones Ventanilla" TTCM="Oro" TipoRN="Monto Monetario" Valor="2000" />
+      <RN Nombre="Cantidad de dias para pago saldo de contado" TTCM="Oro" TipoRN="Cantidad de Dias" Valor="8" />
+	  <RN Nombre="Cantidad de cuotas para pago minimo" TTCM="Oro" TipoRN="Cantidad de Meses de Financiamiento" Valor="8" />
+   </RN>
+   <MIT>
+      <MIT Nombre="Robo" />
+      <MIT Nombre="Perdida" />
+      <MIT Nombre="Vencimiento" />
+   </MIT>
+   <TM>
+      <TM Nombre="Compra" Accion="Debito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Retiro en ATM" Accion="Debito" Acumula_Operacion_ATM="SI" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Pago en ATM" Accion="Credito" Acumula_Operacion_ATM="SI" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Retiro en Ventana" Accion="Debito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="SI" />
+      <TM Nombre="Pago en Ventana" Accion="Credito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="SI" />
+      <TM Nombre="Pago en Linea" Accion="Credito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Recuperacion por Perdida" Accion="Debito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Recuperacion por Robo" Accion="Debito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Renovacion de TF" Accion="Debito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Cargos por Servicio" Accion="Credito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Cargos por Multa Exceso Uso ATM" Accion="Credito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Cargos por Multa Exceso Uso Ventana" Accion="Credito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Intereses Corrientes sobre Saldo" Accion="Debito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="NO" />
+      <TM Nombre="Intereses Moratorios Pago no Realizado" Accion="Debito" Acumula_Operacion_ATM="NO" Acumula_Operacion_Ventana="NO" />
+   </TM>
+   <UA>
+      <Usuario Nombre="test" Password="1234" />
+      <Usuario Nombre="admin" Password="admin123" />
+      <Usuario Nombre="user1" Password="user123" />
+      <Usuario Nombre="demo" Password="demo123" />
+      <Usuario Nombre="sample" Password="sample123" />
+      <Usuario Nombre="guest" Password="guest123" />
+      <Usuario Nombre="dummy" Password="dummy123" />
+      <Usuario Nombre="temp" Password="temp123" />
+      <Usuario Nombre="simple" Password="simple123" />
+   </UA>
+	<TMIC>
+		<TMIC nombre="Credito Int corrientes" />
+		<TMIC nombre="Debito Int corrientes" />
+	</TMIC>
+	<TMIM>
+		<TMIM nombre="Credito Int corrientes" />
+		<TMIM nombre="Debito Int corrientes" />
+	</TMIM>
+</root>
