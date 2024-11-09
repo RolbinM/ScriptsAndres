@@ -28,7 +28,12 @@ BEGIN
 		@Referencia VARCHAR(100),
 		@Procesado BIT,
 		@NuevoSaldo MONEY,
-		@TFActiva VARCHAR(3)
+		@TFActiva VARCHAR(3),
+		@fechaCreacionTF DATETIME,
+		@fechaVencimientoTF DATETIME,
+		@idTarjetaFisica INT,
+		@idTipoMovimiento INT;
+
 
 		-- Obtener los datos de la fila actual usando ROW_NUMBER
 		;WITH FilasNumeradas AS (
@@ -53,18 +58,20 @@ BEGIN
 		DECLARE @MovimientoTemporalSospechoso dbo.MovimientoTemporal;
 		DECLARE @MovimientoTemporalParaEC dbo.MovimientoTemporal;
 
+		SET @idTipoMovimiento = (SELECT TM.id FROM [dbo].TipoMovimiento AS TM WHERE TM.Nombre = @Nombre);
+
 		SELECT @FechaCreacionTF = tf.FechaCreacion,
 			   @FechaVencimientoTF = dbo.ParseFecha(tf.FechaVencimiento),
-			   @idTarjetaFisica = tf.id
+			   @idTarjetaFisica = tf.id,
 			   @TFActiva = tf.Activa
 				FROM [dbo].TF AS tf 
-				WHERE tf.Codigo = @inTarjetaFisica;
+				WHERE tf.Codigo = @TF;
 
 		IF @idTipoMovimiento IS NULL
 				BEGIN
 					SET @outResultCode = 50011;
 					EXEC SP_ConsultarError @outResultCode;
-					COMMIT TRANSACTION InsertarNuevoMovimiento;
+					COMMIT TRANSACTION InsertarNuevoMovimientoLote;
 					RETURN
 				END
 		
@@ -72,15 +79,15 @@ BEGIN
 			BEGIN
 				SET @outResultCode = 50017;
 				EXEC SP_ConsultarError @outResultCode;
-				COMMIT TRANSACTION InsertarNuevoMovimiento;
+				COMMIT TRANSACTION InsertarNuevoMovimientoLote;
 				RETURN
 			END
 
-		IF @fechaVencimientoTFParsed IS NULL
+		IF @fechaVencimientoTF IS NULL
 			BEGIN
 				SET @outResultCode = 50018
 				SELECT @outResultCode
-				COMMIT TRANSACTION InsertarNuevoMovimiento;
+				COMMIT TRANSACTION InsertarNuevoMovimientoLote;
 				RETURN
 			END 
 
@@ -88,41 +95,50 @@ BEGIN
 			BEGIN
 				SET @outResultCode = 50019;
 				EXEC SP_ConsultarError @outResultCode;
-				COMMIT TRANSACTION InsertarNuevoMovimiento;
+				COMMIT TRANSACTION InsertarNuevoMovimientoLote;
 				RETURN
 			END 
 
-		IF (@fechaCreacionTF > @inFechaMovimiento  AND @fechaVencimientoTFParsed < @inFechaMovimiento) OR @TFActiva = 'NO'
+		--Validacion movimiento sospechoso
+		IF @fechaCreacionTF > @FechaMovimiento OR @fechaVencimientoTF < @FechaMovimiento OR @TFActiva = 'NO'
 		BEGIN
 			INSERT INTO @MovimientoTemporalSospechoso (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
-						VALUES (@idTarjetaFisica, @idTipoMovimiento, @Monto, @Descripcion, @fechaVencimientoTF, @Referencia, 0, 0);
+						VALUES (@idTarjetaFisica, @idTipoMovimiento, @Monto, @Descripcion, @FechaMovimiento, @Referencia, 0, 0);
+		END
+
+		IF @Nombre IN ('Recuperacion por Perdida', 'Recuperacion por Robo')
+		BEGIN
+			EXEC dbo.SP_ReposicionTarjetaFisica 
+				 @inCodigoTarjetaRobada = @TF, 
+				 @outResultCode = @outResultCode OUTPUT;
+			INSERT INTO @MovimientoTemporal (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
+				VALUES (@idTarjetaFisica, @idTipoMovimiento, @Monto, @Descripcion, @FechaMovimiento, @Referencia, 1, 0);
+		END
+		ELSE IF @Nombre IN ('Renovacion de TF')
+		BEGIN
+			EXEC dbo.SP_ReposicionTarjetaFisica 
+				 @inCodigoTarjetaRobada = @TF, 
+				 @outResultCode = @outResultCode OUTPUT;
+			INSERT INTO @MovimientoTemporal (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
+				VALUES (@idTarjetaFisica, @idTipoMovimiento, @Monto, @Descripcion, @FechaMovimiento, @Referencia, 1, 0);
+		END
+		ELSE IF @Nombre IN ('Compra', 'Retiro en ATM', 'Pago en ATM', 'Retiro en Ventana', 'Pago en Ventana', 'Pago en Linea')
+		BEGIN
+			INSERT INTO @MovimientoTemporal (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
+				VALUES (@idTarjetaFisica, @idTipoMovimiento, @Monto, @Descripcion, @FechaMovimiento, @Referencia, 1, 0);
 		END
 		ELSE
 		BEGIN
-			IF @Nombre IN ('Recuperacion por Perdida', 'Recuperacion por Robo')
-			BEGIN
-				INSERT INTO @MovimientoTemporal (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
-					VALUES (@idTarjetaFisica, @idTipoMovimiento, @Monto, @Descripcion, @fechaVencimientoTF, @Referencia, 1, 0);
-			END
-			ELSE IF @Nombre IN ('Renovacion de TF')
-			BEGIN
-				INSERT INTO @MovimientoTemporal (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
-					VALUES (@idTarjetaFisica, @idTipoMovimiento, @Monto, @Descripcion, @fechaVencimientoTF, @Referencia, 1, 0);
-			END
-			ELSE IF @Nombre IN ('Compra', 'Retiro en ATM', 'Pago en ATM', 'Retiro en Ventana', 'Pago en Ventana', 'Pago en Linea')
-			BEGIN
-				INSERT INTO @MovimientoTemporal (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
-					VALUES (@idTarjetaFisica, @idTipoMovimiento, @Monto, @Descripcion, @fechaVencimientoTF, @Referencia, 1, 0);
-			END
-			ELSE
-			BEGIN
-				INSERT INTO @MovimientoTemporalParaEC (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
-					VALUES (@idTarjetaFisica, @idTipoMovimiento, @Monto, @Descripcion, @fechaVencimientoTF, @Referencia, 0, 0);
-			END
+			INSERT INTO @MovimientoTemporalParaEC (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
+				VALUES (@idTarjetaFisica, @idTipoMovimiento, @Monto, @Descripcion, @FechaMovimiento, @Referencia, 0, 0);
 		END
 		-- Incrementar el índice para la siguiente iteración
 		SET @FilaActual = @FilaActual + 1;
-	END;
+	END
+	--Select * FROM @MovimientoTemporal
+	--Select * FROM @MovimientoTemporalSospechoso
+	--SELECT * FROM @MovimientoTemporalParaEC
+	COMMIT TRANSACTION InsertarNuevoMovimientoLote;
 	END TRY
 	BEGIN CATCH
 	IF @@TRANCOUNT > 0
@@ -145,3 +161,30 @@ BEGIN
 	SET NOCOUNT OFF;
 END;
 GO
+
+-----PRUEBAS---------------------------------------------------------------------------------------------------------------------------
+
+declare @ex MovimientoVariable
+
+INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
+VALUES('2024-01-01','Compra', '5655636577940569', '2030-01-01', '83779', 'ATM de Palmares', '18TPD')
+
+INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
+VALUES('2024-01-01','Cargos por Multa Exceso Uso ATM', '5373571423133445', '2025-01-01', '90358', 'En Goicoechea', 'S3W04')
+
+INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
+VALUES('2024-01-01','Recuperacion por Perdida', '5525247354599728', '2025-01-01', '0', 'Sucursal en Cartago', 'EQKNP')
+
+SELECT * FROM @ex
+
+Declare @code int;
+EXEC SP_InsertarLoteMovimientos @ex, @code OUTPUT;
+
+SELECT * FROM TF as tf WHERE tf.Codigo = 5655636577940569
+SELECT * FROM TF as tf WHERE tf.Codigo = 5373571423133445
+SELECT * FROM TF as tf WHERE tf.Codigo = 5525247354599728
+
+SELECT * FROM TF as tf WHERE tf.Codigo = 8537718971978825
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------

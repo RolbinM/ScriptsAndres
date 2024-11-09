@@ -310,7 +310,7 @@ BEGIN
 				FROM @Movimiento
 				WHERE FechaOperacion = @FechaOperacion;
 
-				--EXEC dbo.SP_InsertarNuevoMovimiento @Nombre, @TF, @FechaMovimiento, @Monto, @Descripcion, @Referencia, 0;
+				EXEC dbo.SP_InsertarLoteMovimientos @MovimientoVariable, @outResultCode;
 
 				DELETE FROM @MovimientoVariable
 
