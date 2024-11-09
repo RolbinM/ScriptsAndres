@@ -33,6 +33,8 @@ DROP TABLE IF EXISTS [dbo].[TipoRN];
 DROP TABLE IF EXISTS [dbo].[TipoTCM];
 DROP TABLE IF EXISTS [dbo].[Error];
 DROP TABLE IF EXISTS [dbo].[DBError];
+
+DROP PROCEDURE IF EXISTS [dbo].[InsertarLoteMovimientos]
 DROP TYPE IF EXISTS [dbo].[MovimientoVariable];
 
 -- Tabla de tipos de tarjeta cuenta maestra
@@ -117,6 +119,7 @@ CREATE TABLE TipoMIM (
 CREATE TABLE TCM (
     id INT PRIMARY KEY IDENTITY(1,1)
     , Codigo VARCHAR(50)
+    , SaldoActual MONEY  
     , LimiteCredito MONEY
     , idTipoTCM INT FOREIGN KEY REFERENCES TipoTCM(id)
     , idTH INT FOREIGN KEY REFERENCES TH(id)
@@ -141,11 +144,11 @@ CREATE TABLE TC (
 CREATE TABLE TF (
     id INT PRIMARY KEY IDENTITY(1,1)
     , idTC INT FOREIGN KEY REFERENCES TC(id)
-    , Codigo VARCHAR(150)
+    , Codigo VARCHAR(16)
     , CCV VARCHAR(25)
     , FechaCreacion DATETIME
-    , FechaVencimiento VARCHAR(25)
-    , Activa VARCHAR(3) DEFAULT 1
+    , FechaVencimiento VARCHAR(7)
+    , Activa VARCHAR(3) DEFAULT 'SI'
 );
 
 -- Tabla de movimientos respecto a intereses
@@ -170,8 +173,9 @@ CREATE TABLE Movimientos (
     , Monto MONEY
     , Descripcion NVARCHAR(300)
     , Fecha DATETIME
-    , Sospechoso VARCHAR(3) 
     , Referencia NVARCHAR(300)
+    , Procesado BIT DEFAULT 0
+    , NuevoSaldo Money
 );
 
 CREATE TABLE DBError (
@@ -195,7 +199,9 @@ CREATE TYPE dbo.MovimientoVariable AS TABLE (
     FechaMovimiento DATETIME,
     Monto DECIMAL(28,8),
     Descripcion VARCHAR(200),
-    Referencia VARCHAR(100)
+    Referencia VARCHAR(100),
+    Procesado BIT DEFAULT 0,
+    NuevoSaldo MONEY
 );
 GO
 --------------------------------------------------------------------------------

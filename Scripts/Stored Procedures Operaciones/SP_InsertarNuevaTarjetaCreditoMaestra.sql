@@ -55,11 +55,13 @@ BEGIN
 
 			INSERT INTO dbo.TCM(
 				Codigo,
+				SaldoActual,
 				LimiteCredito,
 				idTipoTCM,
 				idTH
 			) VALUES(
 				@inCodigo,
+				0,
 				@inLimiteCredito,
 				@idTipoTCM,
 				@idTarjetaHabiente
