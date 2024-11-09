@@ -14,29 +14,41 @@ SET NOCOUNT ON;
 -- Limpia las tablas
 -- Se puede usar la instrucción IF EXISTS para evitar errores: DROP TABLE IF EXISTS BitacoraEvento;
 -- A continuación se usa así para efectos de testing...
-DROP TABLE IF EXISTS [dbo].[Movimientos];
-DROP TABLE IF EXISTS [dbo].[MIM];
-DROP TABLE IF EXISTS [dbo].[MI];
-DROP TABLE IF EXISTS [dbo].[TF];
-DROP TABLE IF EXISTS [dbo].[TC];
-DROP TABLE IF EXISTS [dbo].[TCA];
-DROP TABLE IF EXISTS [dbo].[TCM];
-DROP TABLE IF EXISTS [dbo].[TipoMIM];
-DROP TABLE IF EXISTS [dbo].[TipoMI];
-DROP TABLE IF EXISTS [dbo].[MIT];
-DROP TABLE IF EXISTS [dbo].[TH];
-DROP TABLE IF EXISTS [dbo].[RN];
-DROP TABLE IF EXISTS [dbo].[Administrador];
-DROP TABLE IF EXISTS [dbo].[TipoMovimiento];
-DROP TABLE IF EXISTS [dbo].[TipoDI];
-DROP TABLE IF EXISTS [dbo].[TipoRN];
-DROP TABLE IF EXISTS [dbo].[TipoTCM];
-DROP TABLE IF EXISTS [dbo].[Error];
-DROP TABLE IF EXISTS [dbo].[DBError];
 
+-- Tablas con dependencias externas
+DROP TABLE IF EXISTS MovimientosSospechosos;
+DROP TABLE IF EXISTS Movimientos;
+DROP TABLE IF EXISTS MIM;
+DROP TABLE IF EXISTS MI;
+DROP TABLE IF EXISTS EstadoCuenta;
+DROP TABLE IF EXISTS SubEstadoCuenta;
+DROP TABLE IF EXISTS TF;
+DROP TABLE IF EXISTS TC;
+DROP TABLE IF EXISTS TCA;
+DROP TABLE IF EXISTS TCM;
+DROP TABLE IF EXISTS RN;
+
+-- Tablas sin dependencias externas
+DROP TABLE IF EXISTS Administrador;
+DROP TABLE IF EXISTS TH;
+DROP TABLE IF EXISTS MIT;
+DROP TABLE IF EXISTS TipoDI;
+DROP TABLE IF EXISTS TipoMovimiento;
+DROP TABLE IF EXISTS TipoMI;
+DROP TABLE IF EXISTS TipoMIM;
+DROP TABLE IF EXISTS TipoRN;
+DROP TABLE IF EXISTS TipoTCM;
+
+-- Tablas para manejo de errores
+DROP TABLE IF EXISTS DBError;
+DROP TABLE IF EXISTS Error;
+
+-- Otros
+DROP TYPE IF EXISTS dbo.MovimientoVariable;
+DROP TYPE IF EXISTS dbo.MovimientoTemporal;
 DROP PROCEDURE IF EXISTS [dbo].[SP_InsertarLoteMovimientos]
-DROP TYPE IF EXISTS [dbo].[MovimientoVariable];
-DROP TYPE IF EXISTS [dbo].[MovimientoTemporal];
+
+
 
 -- Tabla de tipos de tarjeta cuenta maestra
 CREATE TABLE TipoTCM ( 
@@ -209,8 +221,8 @@ CREATE TYPE dbo.MovimientoVariable AS TABLE (
 	Procesado BIT DEFAULT 0,
 	NuevoSaldo MONEY
 );
-GO
 
+GO
 CREATE TYPE dbo.MovimientoTemporal AS TABLE (
 	idTF INT,
     idTipoMovimiento INT,
@@ -222,10 +234,12 @@ CREATE TYPE dbo.MovimientoTemporal AS TABLE (
     NuevoSaldo MONEY
 );
 
+
 -- Tabla de estados de cuenta
+GO
 CREATE TABLE EstadoCuenta (
     id INT PRIMARY KEY IDENTITY(1,1)
-    , idTCM INT REFERENCES FOREIGN KEY TCM(id)
+    , idTCM INT FOREIGN KEY REFERENCES TCM(id)
     , FechaCorte DATE
     , SaldoAlCorte MONEY
     , PagoMinimoMesAnterior MONEY
@@ -250,7 +264,7 @@ CREATE TABLE EstadoCuenta (
 -- Tabla para los sub-estados de cuenta
 CREATE TABLE SubEstadoCuenta (
     id INT PRIMARY KEY IDENTITY(1,1)
-    , idTCA INT REFERENCES FOREIGN KEY TCA(id)
+    , idTCA INT FOREIGN KEY REFERENCES TCA(id)
     , FechaCorte DATE
     , OperacionesATM INT
     , OperacionesVentanilla INT
@@ -276,7 +290,6 @@ CREATE TABLE DBError (
 );
 
 -- Tabla con los errores definidos previamente y sus valores insertados
-GO
 CREATE TABLE Error ( -------------------------------------------------------------
     id INT PRIMARY KEY IDENTITY(1,1)
     , Codigo INT NOT NULL
