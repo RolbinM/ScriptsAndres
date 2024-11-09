@@ -58,6 +58,7 @@ BEGIN
 
 
 			DECLARE @FechaOperacion DATETIME;
+			DECLARE @FechaFinal DATETIME
 			DECLARE @Nombre VARCHAR(100);
 			DECLARE @ValorDocIdentidad VARCHAR(100);
 			DECLARE @FechaNacimiento DATETIME;
@@ -196,13 +197,14 @@ BEGIN
 
 
 			-- Cursor para iterar sobre las fechas de operación
-			DECLARE FechaOperacionCursor CURSOR FOR
-				SELECT FechaOperacion FROM @FechaOperacionTable ORDER BY FechaOperacion ASC;;
-
-			OPEN FechaOperacionCursor;
-			FETCH NEXT FROM FechaOperacionCursor INTO @FechaOperacion;
-
-			WHILE @@FETCH_STATUS = 0
+			
+			SELECT
+				@FechaOperacion = MIN(FechaOperacion),
+				@FechaFinal = MAX(FechaOperacion)
+			FROM @FechaOperacionTable
+			
+			
+			WHILE @FechaOperacion <= @FechaFinal
 			BEGIN
 				-- Iterar sobre la tabla @NTH para cada FechaOperacion
 				DECLARE NTHCursor CURSOR FOR
@@ -313,14 +315,9 @@ BEGIN
 				DELETE FROM @MovimientoVariable
 
 
-				FETCH NEXT FROM FechaOperacionCursor INTO @FechaOperacion;
+				SELECT @FechaOperacion = DATEADD(DAY, 1, @FechaOperacion)
+				
 			END
-
-			CLOSE FechaOperacionCursor;
-			DEALLOCATE FechaOperacionCursor;
-
-
-
 
 
 
