@@ -225,6 +225,7 @@ CREATE TYPE dbo.MovimientoTemporal AS TABLE (
 -- Tabla de estados de cuenta
 CREATE TABLE EstadoCuenta (
     id INT PRIMARY KEY IDENTITY(1,1)
+    , idTCM INT REFERENCES FOREIGN KEY TCM(id)
     , FechaCorte DATE
     , SaldoAlCorte MONEY
     , PagoMinimoMesAnterior MONEY
@@ -249,6 +250,7 @@ CREATE TABLE EstadoCuenta (
 -- Tabla para los sub-estados de cuenta
 CREATE TABLE SubEstadoCuenta (
     id INT PRIMARY KEY IDENTITY(1,1)
+    , idTCA INT REFERENCES FOREIGN KEY TCA(id)
     , FechaCorte DATE
     , OperacionesATM INT
     , OperacionesVentanilla INT
