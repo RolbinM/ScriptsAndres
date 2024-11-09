@@ -228,22 +228,36 @@ CREATE TABLE EstadoCuenta (
     , FechaCorte DATE
     , SaldoAlCorte MONEY
     , PagoMinimoMesAnterior MONEY
-    , FechaLimitePago 
-    , InteresesAlCorte
-    , InteresesMoratoriosAlCorte
-    , OperacionesATM
-    , OperacionesVentanilla
-    , SumaPagosAntesFechaLimitePago
-    , SumaPagosDuranteMes
-    , CantidadPagos
-    , SumaCompras
-    , CantidadCompras
-    , SumaRetiros
-    , CantidadRetiros
-    , SumaCreditos
-    , CantidadCreditos
-    , SumaDebitos
-    , CantidadDebitos
+    , FechaLimitePago DATE
+    , InteresesAlCorte MONEY
+    , InteresesMoratoriosAlCorte MONEY
+    , OperacionesATM INT
+    , OperacionesVentanilla INT
+    , SumaPagosAntesFechaLimitePago MONEY
+    , SumaPagosDuranteMes MONEY
+    , CantidadPagos INT
+    , SumaCompras MONEY
+    , CantidadCompras INT
+    , SumaRetiros MONEY
+    , CantidadRetiros INT
+    , SumaCreditos MONEY
+    , CantidadCreditos INT
+    , SumaDebitos MONEY
+    , CantidadDebitos INT
+);
+
+-- Tabla para los sub-estados de cuenta
+CREATE TABLE SubEstadoCuenta (
+    id INT PRIMARY KEY IDENTITY(1,1)
+    , FechaCorte DATE
+    , OperacionesATM INT
+    , OperacionesVentanilla INT
+    , SumaCompras MONEY
+    , CantidadCompras INT
+    , SumaRetiros MONEY
+    , CantidadRetiros INT
+    , SumaCreditos MONEY
+    , SumaDebitos MONEY
 );
 
 -- Tabla que almacena los errores en la base de datos
