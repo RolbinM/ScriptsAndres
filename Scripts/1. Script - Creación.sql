@@ -36,6 +36,7 @@ DROP TABLE IF EXISTS [dbo].[DBError];
 
 DROP PROCEDURE IF EXISTS [dbo].[SP_InsertarLoteMovimientos]
 DROP TYPE IF EXISTS [dbo].[MovimientoVariable];
+DROP TYPE IF EXISTS [dbo].[MovimientoTemporal];
 
 -- Tabla de tipos de tarjeta cuenta maestra
 CREATE TABLE TipoTCM ( 
@@ -205,7 +206,19 @@ CREATE TYPE dbo.MovimientoVariable AS TABLE (
     Monto DECIMAL(28,8),
     Descripcion VARCHAR(200),
     Referencia VARCHAR(100),
-    Procesado BIT DEFAULT 0,
+	Procesado BIT DEFAULT 0,
+	NuevoSaldo MONEY
+);
+GO
+
+CREATE TYPE dbo.MovimientoTemporal AS TABLE (
+	idTF INT,
+    idTipoMovimiento INT,
+    Monto MONEY,
+    Descripcion NVARCHAR(300),
+    Fecha DATETIME,
+    Referencia NVARCHAR(300),
+    Procesado BIT,
     NuevoSaldo MONEY
 );
 
