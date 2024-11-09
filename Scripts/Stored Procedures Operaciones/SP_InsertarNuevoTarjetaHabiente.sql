@@ -1,3 +1,6 @@
+USE BD1_TP3;
+
+GO
 CREATE OR ALTER PROCEDURE dbo.SP_InsertarNuevoTarjetaHabiente(
 	@inNombre VARCHAR(100),
 	@inValorDocIdentidad VARCHAR(100),

@@ -1,3 +1,6 @@
+USE BD1_TP3;
+
+GO
 CREATE OR ALTER PROCEDURE dbo.SP_InsertarNuevaTarjetaCreditoMaestra(
 	@inCodigo VARCHAR(50),
 	@inTipoTCM VARCHAR(50),

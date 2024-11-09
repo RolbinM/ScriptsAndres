@@ -1,3 +1,6 @@
+USE BD1_TP3;
+
+GO
 CREATE OR ALTER PROCEDURE dbo.SP_InsertarNuevaTarjetaFisica(
 	@inCodigo VARCHAR(150),
 	@inCodigoTCAsociada VARCHAR(100),

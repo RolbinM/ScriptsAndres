@@ -1,3 +1,6 @@
+USE BD1_TP3;
+
+GO
 CREATE OR ALTER PROCEDURE dbo.SP_InsertarNuevaTarjetaCreditoAdicional(
 	@inCodigoTCM VARCHAR(50),
 	@inCodigoTCA VARCHAR(50),

@@ -1,5 +1,8 @@
-DROP PROCEDURE dbo.SP_ReposicionTarjetaFisica
+USE BD1_TP3;
 
+DROP PROCEDURE IF EXISTS dbo.SP_ReposicionTarjetaFisica;
+
+GO
 CREATE OR ALTER PROCEDURE dbo.SP_ReposicionTarjetaFisica(
 	@inCodigoTarjetaRobada VARCHAR(150),
 	@outResultCode INT OUTPUT

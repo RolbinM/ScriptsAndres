@@ -1,5 +1,6 @@
---DROP PROCEDURE dbo.SP_InsertarLoteMovimientos
+USE BD1_TP3;
 
+GO
 CREATE OR ALTER PROCEDURE dbo.SP_InsertarLoteMovimientos
 (
 	@Movimientos dbo.MovimientoVariable READONLY, 
