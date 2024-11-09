@@ -357,7 +357,7 @@ ANDRES
 EXEC CargarOperacionesXML @outResultCode=50008, @inRutaXML='C:\Users\AndresMFIT\OneDrive\Principal\Universidad\Semestre II 2024\BD1\Tarea 3\BDI-T3\Resources\OperacionesFinal.xml';
 
 FOFO
-EXEC CargarOperacionesXML @outResultCode=50008, @inRutaXML='C:\Users\AndresMFIT\OneDrive\Principal\Universidad\Semestre II 2024\BD1\Tarea 3\BDI-T3\Resources\OperacionesFinal.xml';
+EXEC CargarOperacionesXML @outResultCode=50008, @inRutaXML='E:\Desktop\OperacionesFinal.xml';
 
 ROLBINCITO
 EXEC CargarOperacionesXML @outResultCode=50008, @inRutaXML='C:\OperacionesFinal.xml';
