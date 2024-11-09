@@ -157,41 +157,46 @@ CREATE TABLE MI (
     , idTCM INT FOREIGN KEY REFERENCES TCM(id)
     , idTipoMI INT FOREIGN KEY REFERENCES TipoMI(id)
     , SaldoIntereses MONEY
+    , Fecha DATE
 );
 
+-- Tabla de movimientos intereses moratorios
 CREATE TABLE MIM(
     id INT PRIMARY KEY IDENTITY(1,1)
     , idTCM INT FOREIGN KEY REFERENCES TCM(id)
     , idTipoMIM INT FOREIGN KEY REFERENCES TipoMIM(id)
     , SaldoInteresesMoratorios MONEY
+    , Fecha DATE
 );
 
+-- Tabla de movimientos
 CREATE TABLE Movimientos (
     id INT PRIMARY KEY IDENTITY(1,1)
     , idTF INT FOREIGN KEY REFERENCES TF(id)
     , idTipoMovimiento INT FOREIGN KEY REFERENCES TipoMovimiento(id)
     , Monto MONEY
+    , NuevoSaldo Money
     , Descripcion NVARCHAR(300)
     , Fecha DATETIME
     , Referencia NVARCHAR(300)
     , Procesado BIT DEFAULT 0
-    , NuevoSaldo Money
 );
 
-CREATE TABLE DBError (
+-- Tabla de movimientos sospechosos
+CREATE TABLE MovimientosSospechosos (
     id INT PRIMARY KEY IDENTITY(1,1)
-    , UserName NVARCHAR(100)
-    , [Number] INT
-    , [State] INT
-    , [Severity] INT
-    , [Line] INT
-    , [Procedure] NVARCHAR(100)
-    , [Message] NVARCHAR(255)
-    , [DateTime] DATETIME NOT NULL
+    , idTF INT FOREIGN KEY REFERENCES TF(id)
+    , idTipoMovimiento INT FOREIGN KEY REFERENCES TipoMovimiento(id)
+    , Monto MONEY
+    , NuevoSaldo MONEY
+    , Descripcion NVARCHAR(300)
+    , Fecha DATETIME
+    , Referencia NVARCHAR(300)
+    , Procesado BIT DEFAULT 0
 );
-GO
 
----Tablas Variables-------------------------------------------------------------------
+-- Tabla variable
+GO
 CREATE TYPE dbo.MovimientoVariable AS TABLE (
     FechaOperacion DATETIME,
     Nombre VARCHAR(100),
@@ -203,12 +208,46 @@ CREATE TYPE dbo.MovimientoVariable AS TABLE (
     Procesado BIT DEFAULT 0,
     NuevoSaldo MONEY
 );
+
+-- Tabla de estados de cuenta
+CREATE TABLE EstadoCuenta (
+    id INT PRIMARY KEY IDENTITY(1,1)
+    , FechaCorte DATE
+    , SaldoAlCorte MONEY
+    , PagoMinimoMesAnterior MONEY
+    , FechaLimitePago 
+    , InteresesAlCorte
+    , InteresesMoratoriosAlCorte
+    , OperacionesATM
+    , OperacionesVentanilla
+    , SumaPagosAntesFechaLimitePago
+    , SumaPagosDuranteMes
+    , CantidadPagos
+    , SumaCompras
+    , CantidadCompras
+    , SumaRetiros
+    , CantidadRetiros
+    , SumaCreditos
+    , CantidadCreditos
+    , SumaDebitos
+    , CantidadDebitos
+);
+
+-- Tabla que almacena los errores en la base de datos
+CREATE TABLE DBError (
+    id INT PRIMARY KEY IDENTITY(1,1)
+    , UserName NVARCHAR(100)
+    , [Number] INT
+    , [State] INT
+    , [Severity] INT
+    , [Line] INT
+    , [Procedure] NVARCHAR(100)
+    , [Message] NVARCHAR(255)
+    , [DateTime] DATETIME NOT NULL
+);
+
+-- Tabla con los errores definidos previamente y sus valores insertados
 GO
---------------------------------------------------------------------------------
-
-
-
-
 CREATE TABLE Error ( -------------------------------------------------------------
     id INT PRIMARY KEY IDENTITY(1,1)
     , Codigo INT NOT NULL
