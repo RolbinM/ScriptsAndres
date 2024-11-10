@@ -32,7 +32,7 @@ BEGIN
 			, ERROR_MESSAGE()
 			, GETDATE()
 			);
-		SELECT @outResultCode AS outResultCode;
+		EXEC SP_ConsultarError @outResultCode;
 	END CATCH
 	SET NOCOUNT OFF;
 END
