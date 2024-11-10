@@ -12,29 +12,42 @@ BEGIN
 	BEGIN TRY
 		SET @outResultCode = 0;
 
-		DECLARE @gridTF TABLE (
-			CodigoTF VARCHAR(150)
-			, Activa VARCHAR(3)
-			, TipoCuenta VARCHAR(10)
-			, FechaCreacion DATETIME
-			, FechaVencimiento VARCHAR(7)
-		);
 
-		INSERT INTO @gridTF
-			SELECT 
-   				TF.Codigo AS CodigoTF
-   				, TF.Activa
-   				, CASE
-				    WHEN TC.idTCA IS NOT NULL THEN 'TCA'
-        			ELSE 'TCM'
-    				END AS TipoCuenta
-				, TF.FechaCreacion
-    			, TF.FechaVencimiento
-			FROM TF
-			INNER JOIN TC ON TC.id = TF.idTC;
+		SELECT 
+   			tf.Codigo AS CodigoTF
+   			, tf.Activa
+   			, 'TCM' AS TipoCuenta
+			, tf.FechaCreacion
+    		, tf.FechaVencimiento
+		FROM dbo.TF tf
+		INNER JOIN dbo.TC tc
+		ON tc.id = tf.idTC
+		-- Join para obtener la TCM
+		INNER JOIN dbo.TCM tcm
+		ON tcm.id = tc.idTCM
+		INNER JOIN dbo.TH th
+		ON th.id = tcm.idTH
+		WHERE th.Usuario = @inUsuario
 
+		UNION ALL
 
-		SELECT * FROM @gridTF;
+		SELECT 
+   			tf.Codigo AS CodigoTF
+   			, tf.Activa
+   			, 'TCA' AS TipoCuenta
+			, tf.FechaCreacion
+    		, tf.FechaVencimiento
+		FROM dbo.TF tf
+		INNER JOIN dbo.TC tc
+		ON tc.id = tf.idTC
+		-- Joins para obtener la TCM en caso de que sea TCA
+		INNER JOIN dbo.TCA tca
+		ON tca.id = tc.idTCA
+		INNER JOIN dbo.TCM tcm
+		ON tcm.id = tca.idTCM
+		INNER JOIN dbo.TH th
+		ON th.id = tcm.idTH
+		WHERE th.Usuario = @inUsuario
 
 	END TRY
 
@@ -58,3 +71,6 @@ END
 /*
 EXEC SP_ListadoTFs @outResultCode=0, @inUsuario='jperez';
 */
+
+
+SELECT * FROM TCM
