@@ -73,4 +73,3 @@ EXEC SP_ListadoTFs @outResultCode=0, @inUsuario='jperez';
 */
 
 
-SELECT * FROM TCM
