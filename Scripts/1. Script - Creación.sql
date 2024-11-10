@@ -132,7 +132,7 @@ CREATE TABLE TipoMIM (
 CREATE TABLE TCM (
     id INT PRIMARY KEY IDENTITY(1,1)
     , Codigo VARCHAR(50)
-    , SaldoActual MONEY  
+    , SaldoActual MONEY DEFAULT 0
     , LimiteCredito MONEY
     , idTipoTCM INT FOREIGN KEY REFERENCES TipoTCM(id)
     , idTH INT FOREIGN KEY REFERENCES TH(id)
