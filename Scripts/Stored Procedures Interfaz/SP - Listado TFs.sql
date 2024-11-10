@@ -16,6 +16,7 @@ BEGIN
 			CodigoTF VARCHAR(150)
 			, Activa VARCHAR(3)
 			, TipoCuenta VARCHAR(10)
+			, FechaCreacion DATETIME
 			, FechaVencimiento VARCHAR(7)
 		);
 
