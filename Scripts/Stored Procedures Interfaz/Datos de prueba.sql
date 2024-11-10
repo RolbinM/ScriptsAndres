@@ -41,3 +41,29 @@ VALUES
     (2, 1, 20000, 70000, 'Depósito', '2023-10-02', 'REF456', 1),
     (3, 2, -2500, 47500, 'Compra en supermercado', '2023-10-03', 'REF789', 1),
     (4, 3, -1000, 99000, 'Retiro en cajero', '2023-10-04', 'REF012', 0);
+
+-- Insertar datos en la tabla Estad de cuenta
+INSERT INTO EstadoCuenta (
+    idTCM, FechaCorte, SaldoAlCorte, PagoMinimoMesAnterior, FechaLimitePago,
+    InteresesAlCorte, InteresesMoratoriosAlCorte, OperacionesATM, OperacionesVentanilla,
+    SumaPagosAntesFechaLimitePago, SumaPagosDuranteMes, CantidadPagos, 
+    SumaCompras, CantidadCompras, SumaRetiros, CantidadRetiros, 
+    SumaCreditos, CantidadCreditos, SumaDebitos, CantidadDebitos
+)
+VALUES 
+    (1, '2023-10-31', 250000, 50000, '2023-11-05', 5000, 2000, 3, 5, 
+    30000, 50000, 1, 10000, 2, 20000, 1, 15000, 1, 20000, 1),
+    
+    (2, '2023-10-31', 500000, 75000, '2023-11-10', 7500, 3000, 4, 3, 
+    25000, 60000, 2, 30000, 1, 40000, 2, 20000, 1, 30000, 2);
+
+-- Insertar datos de prueba en la tabla SubEstadoCuenta
+INSERT INTO SubEstadoCuenta (
+    idTCA, FechaCorte, OperacionesATM, OperacionesVentanilla, 
+    SumaCompras, CantidadCompras, SumaRetiros, CantidadRetiros, 
+    SumaCreditos, SumaDebitos
+)
+VALUES 
+    (1, '2023-10-31', 2, 3, 15000, 1, 10000, 1, 20000, 10000),
+    
+    (2, '2023-10-31', 1, 2, 10000, 1, 5000, 1, 10000, 5000);

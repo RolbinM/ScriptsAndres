@@ -4,13 +4,17 @@ SELECT * FROM [dbo].[MIM];
 
 SELECT * FROM [dbo].[MI];
 
-SELECT * FROM [dbo].[TF];
-
 SELECT * FROM [dbo].[TC];
+
+SELECT * FROM [dbo].[TF];
 
 SELECT * FROM [dbo].[TCA];
 
 SELECT * FROM [dbo].[TCM];
+
+SELECT * FROM [dbo].[EstadoCuenta];
+
+SELECT * FROM [dbo].[SubEstadoCuenta];
 
 SELECT * FROM [dbo].[TipoMIM];
 
