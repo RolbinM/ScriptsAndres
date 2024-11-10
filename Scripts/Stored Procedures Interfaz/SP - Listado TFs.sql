@@ -69,7 +69,10 @@ BEGIN
 END
 
 /*
-EXEC SP_ListadoTFs @outResultCode=0, @inUsuario='jperez';
+EXEC SP_ListadoTFs @outResultCode=0, @inUsuario='agarcía';
 */
 
 
+
+
+select * from TH
