@@ -16,6 +16,7 @@ BEGIN
 			CodigoTF VARCHAR(150)
 			, Activa VARCHAR(3)
 			, TipoCuenta VARCHAR(10)
+			, FechaCreacion DATETIME
 			, FechaVencimiento VARCHAR(7)
 		);
 
@@ -27,6 +28,7 @@ BEGIN
 				    WHEN TC.idTCA IS NOT NULL THEN 'TCA'
         			ELSE 'TCM'
     				END AS TipoCuenta
+				, TF.FechaCreacion
     			, TF.FechaVencimiento
 			FROM TF
 			INNER JOIN TC ON TC.id = TF.idTC;
