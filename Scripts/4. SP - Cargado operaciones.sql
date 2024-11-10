@@ -53,9 +53,9 @@ BEGIN
 
 			DECLARE @Movimiento dbo.MovimientoVariable
 
-			DECLARE @MovimientoVariable dbo.MovimientoVariable
-
-
+			DECLARE @MovimientosLote dbo.MovimientoVariable
+			DECLARE @MovimientosRenovacionTF dbo.MovimientoVariable
+			DECLARE @MovimientosReposicionTF dbo.MovimientoVariable
 
 			DECLARE @FechaOperacion DATETIME;
 			DECLARE @FechaFinal DATETIME
@@ -304,15 +304,34 @@ BEGIN
 
 
 				-- Sacamos el lote de movimientos de la fechaOperacion
-				
-				INSERT INTO @MovimientoVariable(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
+				INSERT INTO @MovimientosLote(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
 				SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
 				FROM @Movimiento
-				WHERE FechaOperacion = @FechaOperacion;
+				WHERE FechaOperacion = @FechaOperacion AND Nombre IN ('Compra', 'Retiro en ATM', 'Pago en ATM', 'Retiro en Ventana', 'Pago en Ventana', 'Pago en Linea', 'Cargos por Servicio', 'Cargos por Multa Exceso Uso ATM', 'Cargos por Multa Exceso Uso Ventana');
 
-				EXEC dbo.SP_InsertarLoteMovimientos @MovimientoVariable, @outResultCode;
+				EXEC dbo.SP_InsertarLoteMovimientos @MovimientosLote, @outResultCode;
+				DELETE FROM @MovimientosLote
 
-				DELETE FROM @MovimientoVariable
+
+				-- Sacamos el lote de reposicion de tf de la fechaOperacion
+				INSERT INTO @MovimientosReposicionTF(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
+				SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
+				FROM @Movimiento
+				WHERE FechaOperacion = @FechaOperacion AND Nombre IN ('Recuperacion por Perdida', 'Recuperacion por Robo');
+
+				EXEC dbo.SP_ReposicionLoteTarjetaFisica @MovimientosReposicionTF, @outResultCode;
+				DELETE FROM @MovimientosReposicionTF
+
+
+
+				-- Sacamos el lote de reposicion de tf de la fechaOperacion
+				INSERT INTO @MovimientosRenovacionTF(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
+				SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
+				FROM @Movimiento
+				WHERE FechaOperacion = @FechaOperacion AND Nombre IN ('Renovacion de TF');
+
+				-- EXEC dbo.SP_RenovacionLoteTarjetaFisica @MovimientosRenovacionTF, @outResultCode;
+				DELETE FROM @MovimientosRenovacionTF
 
 
 				SELECT @FechaOperacion = DATEADD(DAY, 1, @FechaOperacion)
