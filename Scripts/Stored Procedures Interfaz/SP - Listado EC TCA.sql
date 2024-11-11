@@ -38,7 +38,8 @@ BEGIN
             , CantidadRetiros
             , SumaRetiros
         FROM SubEstadoCuenta
-        WHERE idTCA = @idTCA;
+        WHERE idTCA = @idTCA
+		ORDER BY FechaCorte DESC;
 
 
 	END TRY
@@ -65,5 +66,5 @@ BEGIN
 END
 
 /*
-EXEC SP_ListadoEstadosCuentaTCA @outResultCode=0, @inCodigoTF='5555666677778888';
+EXEC SP_ListadoEstadosCuentaTCA @outResultCode=0, @inCodigoTF='2855446415731838';
 */

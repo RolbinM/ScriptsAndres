@@ -4,6 +4,7 @@ GO
 CREATE OR ALTER PROCEDURE SP_ListadoDetalleEC
 (
 	@inIdEstadoCuenta VARCHAR(16)
+	, @inCodigoTF VARCHAR(16)
 	, @outResultCode INT OUTPUT
 )
 AS
@@ -12,6 +13,10 @@ BEGIN
 	BEGIN TRY
 		SET @outResultCode = 0;
 
+	-- Para determinar el estado de cuenta a listar entonces hay que obtener los movimientos realizados en un cierto rango de fechas
+	-- Por lo que hay que agregar el campo "FechaCreacion" a la tabla EstadoCuenta
+
+	-- Lo mismo para la tabla SubEstadoCuenta
 
 
 	END TRY

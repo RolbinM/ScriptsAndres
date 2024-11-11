@@ -13,7 +13,7 @@ BEGIN
 		SET @outResultCode = 0;
 
 
-		SELECT 
+		SELECT
    			tf.Codigo AS CodigoTF
    			, tf.Activa
    			, 'TCM' AS TipoCuenta
@@ -28,8 +28,8 @@ BEGIN
 
 		UNION ALL
 
-		SELECT 
-   			tf.Codigo AS CodigoTF
+		SELECT
+			tf.Codigo AS CodigoTF
    			, tf.Activa
    			, 'TCA' AS TipoCuenta
 			, tf.FechaCreacion
@@ -41,8 +41,7 @@ BEGIN
 		INNER JOIN dbo.TCM tcm ON tcm.id = tca.idTCM
 		INNER JOIN dbo.TH th ON th.id = tcm.idTH
 		WHERE th.Usuario = @inUsuario
-
-		-- FALTA EL ORDER BY
+		ORDER BY tf.FechaCreacion DESC;
 
 
 	END TRY

@@ -38,7 +38,8 @@ BEGIN
 			, OperacionesATM AS CantidadOperacionesATM
 			, OperacionesVentanilla AS CantidadOperacionesVentanilla
 		FROM EstadoCuenta
-		WHERE idTCM = @idTCM;
+		WHERE idTCM = @idTCM
+		ORDER BY FechaCorte DESC;
 
 	END TRY
 
@@ -64,5 +65,5 @@ BEGIN
 END
 
 /*
-EXEC SP_ListadoEstadosCuentaTCM @outResultCode=0, @inCodigoTF='1234567890123456';
+EXEC SP_ListadoEstadosCuentaTCM @outResultCode=0, @inCodigoTF='9585994043536904';
 */
