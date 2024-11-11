@@ -44,6 +44,7 @@ DROP TABLE IF EXISTS DBError;
 DROP TABLE IF EXISTS Error;
 
 -- Otros
+DROP PROCEDURE IF EXISTS [dbo].[SP_ReposicionLoteTarjetaFisica]
 DROP PROCEDURE IF EXISTS [dbo].[SP_InsertarLoteMovimientos]
 DROP TYPE IF EXISTS dbo.MovimientoVariable;
 DROP TYPE IF EXISTS dbo.MovimientoTemporal;

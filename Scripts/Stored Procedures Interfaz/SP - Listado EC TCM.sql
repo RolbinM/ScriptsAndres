@@ -29,30 +29,16 @@ BEGIN
             RETURN;
         END
 
-		DECLARE @gridEC TABLE (
-			FechaCorte DATE
-            , PagoMinimo MONEY
-            , PagoContado MONEY
-            , InteresesCorrientes MONEY
-            , InteresesMoratorios MONEY
-            , CantidadOperacionesATM INT
-            , CantidadOperacionesVentanilla INT
-		);
-
-        INSERT INTO @gridEC
-            SELECT
-                FechaCorte
-                , PagoMinimoMesAnterior AS PagoMinimo
-                , SaldoAlCorte AS PagoContado
-                , InteresesAlCorte AS InteresesCorrientes
-                , InteresesMoratoriosAlCorte AS InteresesMoratorios
-                , OperacionesATM AS CantidadOperacionesATM
-                , OperacionesVentanilla AS CantidadOperacionesVentanilla
-            FROM EstadoCuenta
-            WHERE idTCM = @idTCM;
-
-
-		SELECT * FROM @gridEC;
+		SELECT
+			FechaCorte
+			, PagoMinimoMesAnterior AS PagoMinimo
+			, SaldoAlCorte AS PagoContado
+			, InteresesAlCorte AS InteresesCorrientes
+			, InteresesMoratoriosAlCorte AS InteresesMoratorios
+			, OperacionesATM AS CantidadOperacionesATM
+			, OperacionesVentanilla AS CantidadOperacionesVentanilla
+		FROM EstadoCuenta
+		WHERE idTCM = @idTCM;
 
 	END TRY
 
@@ -72,7 +58,7 @@ BEGIN
 			, ERROR_MESSAGE()
 			, GETDATE()
 			);
-		SELECT @outResultCode AS outResultCode;
+		EXEC SP_ConsultarError @outResultCode;
 	END CATCH
 	SET NOCOUNT OFF;
 END

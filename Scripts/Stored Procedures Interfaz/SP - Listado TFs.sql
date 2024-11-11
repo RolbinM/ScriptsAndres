@@ -20,13 +20,10 @@ BEGIN
 			, tf.FechaCreacion
     		, tf.FechaVencimiento
 		FROM dbo.TF tf
-		INNER JOIN dbo.TC tc
-		ON tc.id = tf.idTC
+		INNER JOIN dbo.TC tc ON tc.id = tf.idTC
 		-- Join para obtener la TCM
-		INNER JOIN dbo.TCM tcm
-		ON tcm.id = tc.idTCM
-		INNER JOIN dbo.TH th
-		ON th.id = tcm.idTH
+		INNER JOIN dbo.TCM tcm ON tcm.id = tc.idTCM
+		INNER JOIN dbo.TH th ON th.id = tcm.idTH
 		WHERE th.Usuario = @inUsuario
 
 		UNION ALL
@@ -38,16 +35,15 @@ BEGIN
 			, tf.FechaCreacion
     		, tf.FechaVencimiento
 		FROM dbo.TF tf
-		INNER JOIN dbo.TC tc
-		ON tc.id = tf.idTC
+		INNER JOIN dbo.TC tc ON tc.id = tf.idTC
 		-- Joins para obtener la TCM en caso de que sea TCA
-		INNER JOIN dbo.TCA tca
-		ON tca.id = tc.idTCA
-		INNER JOIN dbo.TCM tcm
-		ON tcm.id = tca.idTCM
-		INNER JOIN dbo.TH th
-		ON th.id = tcm.idTH
+		INNER JOIN dbo.TCA tca ON tca.id = tc.idTCA
+		INNER JOIN dbo.TCM tcm ON tcm.id = tca.idTCM
+		INNER JOIN dbo.TH th ON th.id = tcm.idTH
 		WHERE th.Usuario = @inUsuario
+
+		-- FALTA EL ORDER BY
+
 
 	END TRY
 
@@ -69,10 +65,5 @@ BEGIN
 END
 
 /*
-EXEC SP_ListadoTFs @outResultCode=0, @inUsuario='agarcía';
+EXEC SP_ListadoTFs @outResultCode=0, @inUsuario='agarcÃ­a';
 */
-
-
-
-
-select * from TH
