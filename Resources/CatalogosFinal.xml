@@ -10,6 +10,7 @@
       <TRN Nombre="Cantidad de Operaciones" tipo="Entero" />
       <TRN Nombre="Monto Monetario" tipo="Money" />
 	  <TRN Nombre="Cantidad de Meses de Financiamiento" tipo="Entero" />
+	  <TRN Nombre="Cantidad de Años" tipo="Entero" />
    </TRN>
    <RN>
 	  <RN Nombre="Maximo limite credito" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="10.000.000" />
@@ -29,6 +30,7 @@
       <RN Nombre="Multa exceso de operaciones Ventanilla" TTCM="Corporativo" TipoRN="Monto Monetario" Valor="2800" />
       <RN Nombre="Cantidad de dias para pago saldo de contado" TTCM="Corporativo" TipoRN="Cantidad de Dias" Valor="15" />
 	  <RN Nombre="Cantidad de cuotas para pago minimo" TTCM="Corporativo" TipoRN="Cantidad de Meses de Financiamiento" Valor="6" />
+	  <RN Nombre="Cantidad de Años para Vencimiento de TF" TTCM="Corporativo" TipoRN="Cantidad de Años" Valor="4" />
       <RN Nombre="Maximo limite credito" TTCM="Platino" TipoRN="Monto Monetario" Valor="7.000.000" />
       <RN Nombre="Tasa de interes corriente" TTCM="Platino" TipoRN="Porcentaje" Valor="4" />
       <RN Nombre="intereses moratorios" TTCM="Platino" TipoRN="Porcentaje" Valor="5" />
@@ -46,6 +48,7 @@
       <RN Nombre="Multa exceso de operaciones Ventanilla" TTCM="Platino" TipoRN="Monto Monetario" Valor="2400" />
       <RN Nombre="Cantidad de dias para pago saldo de contado" TTCM="Platino" TipoRN="Cantidad de Dias" Valor="10" />
 	  <RN Nombre="Cantidad de cuotas para pago minimo" TTCM="Platino" TipoRN="Cantidad de Meses de Financiamiento" Valor="10" />
+	  <RN Nombre="Cantidad de Años para Vencimiento de TF" TTCM="Platino" TipoRN="Cantidad de Años" Valor="4" />
       <RN Nombre="Maximo limite credito" TTCM="Oro" TipoRN="Monto Monetario" Valor="5.000.000" />
       <RN Nombre="Tasa de interes corriente" TTCM="Oro" TipoRN="Porcentaje" Valor="3.5" />
       <RN Nombre="intereses moratorios" TTCM="Oro" TipoRN="Porcentaje" Valor="5" />
@@ -63,6 +66,7 @@
       <RN Nombre="Multa exceso de operaciones Ventanilla" TTCM="Oro" TipoRN="Monto Monetario" Valor="2000" />
       <RN Nombre="Cantidad de dias para pago saldo de contado" TTCM="Oro" TipoRN="Cantidad de Dias" Valor="8" />
 	  <RN Nombre="Cantidad de cuotas para pago minimo" TTCM="Oro" TipoRN="Cantidad de Meses de Financiamiento" Valor="8" />
+	  <RN Nombre="Cantidad de Años para Vencimiento de TF" TTCM="Oro" TipoRN="Cantidad de Años" Valor="4" />
    </RN>
    <MIT>
       <MIT Nombre="Robo" />

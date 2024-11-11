@@ -352,7 +352,7 @@ END;
 GO
 
 -----PRUEBAS---------------------------------------------------------------------------------------------------------------------------
-
+/*
 declare @ex MovimientoVariable
 
 INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
@@ -390,5 +390,5 @@ UPDATE TCM
 SET SaldoActual = SaldoActual + 87000
 FROM TCM as tcm
 where tcm.id = 3
-
+*/
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
