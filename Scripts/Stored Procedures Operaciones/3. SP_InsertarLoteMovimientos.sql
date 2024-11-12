@@ -300,16 +300,24 @@ BEGIN
 
 		--Insercion de Movimientos a la tabla real----------------------------------------------------------------
 
-		INSERT INTO Movimientos (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
+		DECLARE @tablaMovimientosAjustados dbo.MovimientoTemporal;
+
+		-- Insertamos los datos en la tabla de tipo definido por el usuario
+		INSERT INTO @tablaMovimientosAjustados (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
 		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporal
 		UNION ALL
-		--SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalSospechoso
-		--UNION ALL
+		-- SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalSospechoso
+		-- UNION ALL
 		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalParaEC
 		UNION ALL
 		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalPerdidaRobo
 		UNION ALL
-		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalRenovacion;	
+		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalRenovacion;
+
+
+		EXEC dbo.SP_InsertarMovimiento
+			@tablaMovimientos = @tablaMovimientosAjustados,
+			@outResultCode = @outResultCode OUTPUT;
 		
 
 		-- Commit la transacción si todo está correcto

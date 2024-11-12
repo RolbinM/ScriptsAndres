@@ -302,7 +302,7 @@ BEGIN
 
 
 
-
+				
 				-- Sacamos el lote de movimientos de la fechaOperacion
 				INSERT INTO @MovimientosLote(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
 				SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
@@ -312,7 +312,7 @@ BEGIN
 				EXEC dbo.SP_InsertarLoteMovimientos @MovimientosLote, @outResultCode;
 				DELETE FROM @MovimientosLote
 
-
+				/*
 				-- Sacamos el lote de reposicion de tf de la fechaOperacion
 				INSERT INTO @MovimientosReposicionTF(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
 				SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
@@ -320,8 +320,7 @@ BEGIN
 				WHERE FechaOperacion = @FechaOperacion AND Nombre IN ('Recuperacion por Perdida', 'Recuperacion por Robo');
 
 				EXEC dbo.SP_ReposicionLoteTarjetaFisica @MovimientosReposicionTF, @outResultCode;
-				DELETE FROM @MovimientosReposicionTF
-
+				DELETE FROM @MovimientosReposicionTF*/
 
 
 				-- Sacamos el lote de reposicion de tf de la fechaOperacion
