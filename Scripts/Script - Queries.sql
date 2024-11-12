@@ -1,5 +1,7 @@
 SELECT * FROM [dbo].[Movimientos];
 
+SELECT * FROM [dbo].[MovimientosSospechosos];
+
 SELECT * FROM [dbo].[MIM];
 
 SELECT * FROM [dbo].[MI];

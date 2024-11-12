@@ -73,7 +73,10 @@ BEGIN
         FROM 
             #MovimientosConInfo
         WHERE 
-            Nombre IN ('Compra', 'Retiro en ATM', 'Pago en ATM', 'Retiro en Ventana', 'Pago en Ventana', 'Pago en Linea');
+            Nombre IN ('Compra', 'Retiro en ATM', 'Pago en ATM', 'Retiro en Ventana', 'Pago en Ventana', 'Pago en Linea') 
+			AND fechaCreacionTF <= FechaMovimiento 
+            AND fechaVencimientoTF >= FechaMovimiento 
+            AND TFActiva = 'SI';
 
         INSERT INTO @MovimientoTemporalParaEC (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
         SELECT 
@@ -89,36 +92,6 @@ BEGIN
             #MovimientosConInfo
         WHERE 
             Nombre IN ('Cargos por Servicio', 'Cargos por Multa Exceso Uso ATM', 'Cargos por Multa Exceso Uso Ventana');
-
-        INSERT INTO @MovimientoTemporalPerdidaRobo (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
-        SELECT 
-            idTarjetaFisica,
-            idTipoMovimiento,
-            Monto,
-            Descripcion,
-            FechaMovimiento,
-            Referencia,
-            0,
-            0
-        FROM 
-            #MovimientosConInfo
-        WHERE 
-            Nombre IN ('Recuperacion por Perdida', 'Recuperacion por Robo');
-
-        INSERT INTO @MovimientoTemporalRenovacion (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
-        SELECT 
-            idTarjetaFisica,
-            idTipoMovimiento,
-            Monto,
-            Descripcion,
-            FechaMovimiento,
-            Referencia,
-            0,
-            0
-        FROM 
-            #MovimientosConInfo
-        WHERE 
-            Nombre IN ('Renovacion de TF');
 
         INSERT INTO @MovimientoTemporalSospechoso (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
         SELECT 
@@ -140,7 +113,7 @@ BEGIN
             OR fechaVencimientoTF < FechaMovimiento 
             OR TFActiva = 'NO';
 
-		--Aplica los movimientos al saldo
+		--Inicia el proceso de actualizacion de saldo
 
 		DECLARE @TablaIncrementos TABLE (
 				RowNum INT PRIMARY KEY IDENTITY(1,1),
@@ -161,6 +134,17 @@ BEGIN
 				idTF INT
 			);
 
+		DECLARE @MixMovimientos dbo.MovimientoTemporal;  
+
+		INSERT INTO @MixMovimientos (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
+		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo 
+		FROM @MovimientoTemporal
+		UNION ALL
+		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo 
+		FROM @MovimientoTemporalSospechoso;
+
+		--Inserciones en tabla incrementos de Movimientos Diarios y Movimientos sospechosos
+
 		INSERT INTO @TablaIncrementos(Fecha, Referencia, Monto, idTF, idTCM)
 		SELECT mt.Fecha, mt.Referencia, mt.Monto, tf.id, CASE 
 					WHEN tcm.id IS NOT NULL THEN tcm.id
@@ -170,7 +154,7 @@ BEGIN
 		FROM 
 			TipoMovimiento as TM
 			INNER JOIN 
-			@MovimientoTemporal as mt
+			@MixMovimientos as mt
 			ON TM.id = mt.idTipoMovimiento
 
 			INNER JOIN 
@@ -189,6 +173,8 @@ BEGIN
 			ON tcmAux.id = tca.idTCM
 		WHERE TM.Accion = 'Credito'; 
 
+		--Inserciones en tabla decrementos de Movimientos Diarios y Movimientos sospechosos
+
 		INSERT INTO @TablaDecrementos(Fecha, Referencia, Monto, idTF, idTCM)
 		SELECT mt.Fecha, mt.Referencia, mt.Monto, tf.id, CASE 
 					WHEN tcm.id IS NOT NULL THEN tcm.id
@@ -198,7 +184,7 @@ BEGIN
 		FROM 
 			TipoMovimiento as TM
 			INNER JOIN 
-			@MovimientoTemporal as mt
+			@MixMovimientos as mt
 			ON TM.id = mt.idTipoMovimiento
 
 			INNER JOIN 
@@ -217,13 +203,13 @@ BEGIN
 			ON tcmAux.id = tca.idTCM
 		WHERE TM.Accion = 'Debito'; 
 
+		--Ciclo para actualizar incrementos
+
 		DECLARE @CurrentRow INT = 1;
 		DECLARE @MaxRow INT;
 
 		SELECT @MaxRow = COUNT(*) FROM @TablaIncrementos;
 
-
-		--Ciclo para actualizar incrementos
 		WHILE @CurrentRow <= @MaxRow
 		BEGIN
 			DECLARE @Fecha DATE;
@@ -257,6 +243,15 @@ BEGIN
 			SET NuevoSaldo = @tempNuevoSaldo
 			FROM @MovimientoTemporal as mt 
 			WHERE  mt.Fecha = @Fecha AND mt.Referencia = @Referencia AND mt.Monto = @Monto
+
+			IF @@ROWCOUNT = 0
+			BEGIN
+				-- Si ninguna fila de movimiento temporal se actualiza entonces el registro debe estar en movimientos sospechosos
+				UPDATE @MovimientoTemporalSospechoso
+				SET NuevoSaldo = @tempNuevoSaldo
+				FROM @MovimientoTemporalSospechoso as mt 
+				WHERE  mt.Fecha = @Fecha AND mt.Referencia = @Referencia AND mt.Monto = @Monto
+			END
 
 			SET @CurrentRow = @CurrentRow + 1;
 		END
@@ -294,6 +289,15 @@ BEGIN
 			FROM @MovimientoTemporal as mt 
 			WHERE  mt.Fecha = @Fecha AND mt.Referencia = @Referencia AND mt.Monto = @Monto
 
+			IF @@ROWCOUNT = 0
+			BEGIN
+				-- Si ninguna fila de movimiento temporal se actualiza entonces el registro debe estar en movimientos sospechosos
+				UPDATE @MovimientoTemporalSospechoso
+				SET NuevoSaldo = @tempNuevoSaldo
+				FROM @MovimientoTemporalSospechoso as mt 
+				WHERE  mt.Fecha = @Fecha AND mt.Referencia = @Referencia AND mt.Monto = @Monto
+			END
+
 			SET @CurrentRow = @CurrentRow + 1;
 		END
 
@@ -306,19 +310,16 @@ BEGIN
 		INSERT INTO @tablaMovimientosAjustados (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
 		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporal
 		UNION ALL
-		-- SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalSospechoso
-		-- UNION ALL
-		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalParaEC
-		UNION ALL
-		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalPerdidaRobo
-		UNION ALL
-		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalRenovacion;
+		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalParaEC;
 
 
 		EXEC dbo.SP_InsertarMovimiento
 			@tablaMovimientos = @tablaMovimientosAjustados,
 			@outResultCode = @outResultCode OUTPUT;
 		
+		EXEC dbo.SP_InsertarMovimientoSospechoso
+			@tablaMovimientos = @MovimientoTemporalSospechoso,
+			@outResultCode = @outResultCode OUTPUT;
 
 		-- Commit la transacción si todo está correcto
         COMMIT TRANSACTION InsertarNuevoMovimientoLote;
@@ -364,10 +365,12 @@ GO
 declare @ex MovimientoVariable
 
 INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
+VALUES('2024-01-01','Compra', '5655636577940569', '2040-01-01', '83779', 'ATM de Palmares', '221L1')
+
 VALUES('2024-01-01','Compra', '5655636577940569', '2030-01-01', '83779', 'ATM de Palmares', '18TPD')
 
 INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
-VALUES('2024-01-01','Cargos por Multa Exceso Uso ATM', '5373571423133445', '2025-01-01', '90358', 'En Goicoechea', 'S3W04')
+VALUES('2024-01-01','Cargos por Multa Exceso Uso ATM', '5373571423133445', '2027-01-01', '90358', 'En Goicoechea', 'S3W04')
 
 INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
 VALUES('2024-01-01','Recuperacion por Perdida', '5525247354599728', '2025-01-01', '0', 'Sucursal en Cartago', 'EQKNP')
