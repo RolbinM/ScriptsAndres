@@ -6,6 +6,7 @@ CREATE OR ALTER PROCEDURE dbo.SP_InsertarNuevaTarjetaFisica(
 	@inCodigoTCAsociada VARCHAR(100),
 	@inFechaVencimiento VARCHAR(25),
 	@inCCV VARCHAR(25),
+	@inFechaOperacion DATETIME,
 	@outResultCode INT OUTPUT
 )
 AS
@@ -63,7 +64,7 @@ BEGIN
 				@idTCAsociada,
 				@inCodigo,
 				@inCCV,
-				GETDATE(),
+				@inFechaOperacion,
 				@inFechaVencimiento,
 				'SI'
 			)

@@ -291,7 +291,7 @@ BEGIN
 				WHILE @@FETCH_STATUS = 0
 				BEGIN
 					-- Llamar al procedimiento almacenado para cada fila de @NTF
-					EXEC SP_InsertarNuevaTarjetaFisica @Codigo, @TCAsociada, @FechaVencimiento, @CCV, 0;
+					EXEC SP_InsertarNuevaTarjetaFisica @Codigo, @TCAsociada, @FechaVencimiento, @CCV, @FechaOperacion, 0;
 
 					FETCH NEXT FROM NTFCursor INTO @Codigo, @TCAsociada, @FechaVencimiento, @CCV;
 				END
