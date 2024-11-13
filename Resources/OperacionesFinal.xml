@@ -137,6 +137,11 @@
 			<NTF Codigo="8371868300839996" TCAsociada="81520" FechaVencimiento="5/2028" CCV="1115" />
 			<NTF Codigo="4286961520207211" TCAsociada="43710" FechaVencimiento="12/2026" CCV="1615" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="9585994043536904" Razon="Perdida" />
+			<RRP TF="2855446415731838" Razon="Perdida" />
+			<RRP TF="5525247354599728" Razon="Robo" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Retiro en Ventana" TF="3488477239742811" FechaMovimiento="2024-01-05" Monto="39087" Descripcion="En Alajuela" Referencia="0YQEA" />
 			<Movimiento Nombre="Pago en Linea" TF="2794325256592805" FechaMovimiento="2024-01-05" Monto="40343" Descripcion="ATM de Liberia" Referencia="5LPIS" />
@@ -247,6 +252,12 @@
 			<NTF Codigo="7137219698255989" TCAsociada="69365" FechaVencimiento="11/2026" CCV="2455" />
 			<NTF Codigo="7634009855741021" TCAsociada="36160" FechaVencimiento="8/2026" CCV="3068" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="6582011518402719" Razon="Robo" />
+			<RRP TF="5655636577940569" Razon="Perdida" />
+			<RRP TF="8978920513967653" Razon="Robo" />
+			<RRP TF="5585087340448535" Razon="Perdida" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Pago en Linea" TF="5538858134303627" FechaMovimiento="2024-01-10" Monto="48411" Descripcion="En Santo Tomás" Referencia="ZJBVL" />
 			<Movimiento Nombre="Retiro en ATM" TF="1694998673342057" FechaMovimiento="2024-01-10" Monto="28088" Descripcion="Walmart en Escazú" Referencia="I9FDN" />
@@ -302,6 +313,11 @@
 			<NTF Codigo="2197620817888201" TCAsociada="52192" FechaVencimiento="12/2028" CCV="7541" />
 			<NTF Codigo="8603018352074994" TCAsociada="31836" FechaVencimiento="1/2026" CCV="2082" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="3488477239742811" Razon="Perdida" />
+			<RRP TF="6418223953029167" Razon="Robo" />
+			<RRP TF="1694998673342057" Razon="Robo" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Retiro en Ventana" TF="8348133262205011" FechaMovimiento="2024-01-12" Monto="61512" Descripcion="En Santa Ana" Referencia="3BYHP" />
 			<Movimiento Nombre="Pago en Ventana" TF="5395554230644494" FechaMovimiento="2024-01-12" Monto="65027" Descripcion="En Puntarenas" Referencia="W7ESX" />
@@ -357,6 +373,13 @@
 			<NTF Codigo="2337742938367048" TCAsociada="94705" FechaVencimiento="9/2026" CCV="8918" />
 			<NTF Codigo="3549875182800350" TCAsociada="40552" FechaVencimiento="4/2027" CCV="6028" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="1524776262565386" Razon="Robo" />
+			<RRP TF="2794325256592805" Razon="Perdida" />
+			<RRP TF="2668231324191095" Razon="Robo" />
+			<RRP TF="8371868300839996" Razon="Perdida" />
+			<RRP TF="9426782141767763" Razon="Perdida" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Pago en Ventana" TF="9544162405780883" FechaMovimiento="2024-01-15" Monto="33724" Descripcion="ATM de Escazú" Referencia="F04BT" />
 			<Movimiento Nombre="Pago en Linea" TF="8978920513967653" FechaMovimiento="2024-01-15" Monto="79861" Descripcion="Sucursal en Desamparados" Referencia="DWYMZ" />
@@ -522,6 +545,12 @@
 			<NTF Codigo="1172092706246620" TCAsociada="19486" FechaVencimiento="2/2027" CCV="4779" />
 			<NTF Codigo="7875286369977780" TCAsociada="40287" FechaVencimiento="10/2027" CCV="1226" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="5134942862922132" Razon="Robo" />
+			<RRP TF="3620383385494061" Razon="Perdida" />
+			<RRP TF="8796152434508582" Razon="Robo" />
+			<RRP TF="3549875182800350" Razon="Robo" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Retiro en Ventana" TF="6839292845612518" FechaMovimiento="2024-01-25" Monto="27758" Descripcion="En Ciudad Quesada" Referencia="4K9CG" />
 			<Movimiento Nombre="Pago en Ventana" TF="3620383385494061" FechaMovimiento="2024-01-25" Monto="87040" Descripcion="Sucursal en Talamanca" Referencia="BMY4T" />
@@ -632,6 +661,11 @@
 			<NTF Codigo="8360060851961056" TCAsociada="69318" FechaVencimiento="01/2028" CCV="2363" />
 			<NTF Codigo="5992150859290261" TCAsociada="15964" FechaVencimiento="12/2027" CCV="9379" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="2337742938367048" Razon="Robo" />
+			<RRP TF="8965023215396559" Razon="Perdida" />
+			<RRP TF="8537718971978825" Razon="Robo" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Compra" TF="5655636577940569" FechaMovimiento="2024-02-03" Monto="23726" Descripcion="ATM de Liberia" Referencia="1PC2O" />
 			<Movimiento Nombre="Pago en Ventana" TF="9982757494520271" FechaMovimiento="2024-02-03" Monto="82537" Descripcion="En Goicoechea" Referencia="JUXRB" />
@@ -742,6 +776,13 @@
 			<NTF Codigo="7449570372657202" TCAsociada="17982" FechaVencimiento="01/2026" CCV="9733" />
 			<NTF Codigo="9508311347084149" TCAsociada="53004" FechaVencimiento="03/2028" CCV="3254" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="4921641842263358" Razon="Robo" />
+			<RRP TF="5567712895594397" Razon="Perdida" />
+			<RRP TF="6842362296565369" Razon="Robo" />
+			<RRP TF="5582465902658775" Razon="Robo" />
+			<RRP TF="8348133262205011" Razon="Perdida" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Pago en ATM" TF="8978920513967653" FechaMovimiento="2024-02-09" Monto="16288" Descripcion="ATM de Guápiles" Referencia="AUG2R" />
 			<Movimiento Nombre="Pago en ATM" TF="4366645788435358" FechaMovimiento="2024-02-09" Monto="32286" Descripcion="En Palmares" Referencia="SKYTQ" />
@@ -907,6 +948,11 @@
 			<NTF Codigo="4686287680451589" TCAsociada="10534" FechaVencimiento="06/2026" CCV="9699" />
 			<NTF Codigo="1083104045834518" TCAsociada="23007" FechaVencimiento="11/2027" CCV="4007" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="9544162405780883" Razon="Robo" />
+			<RRP TF="1172092706246620" Razon="Perdida" />
+			<RRP TF="5803553421157083" Razon="Robo" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Pago en Ventana" TF="1694998673342057" FechaMovimiento="2024-02-18" Monto="79941" Descripcion="Sucursal en Coto Brus" Referencia="VSZGO" />
 			<Movimiento Nombre="Pago en Ventana" TF="4366645788435358" FechaMovimiento="2024-02-18" Monto="91171" Descripcion="Sucursal en Escazú" Referencia="IY1Z1" />
@@ -962,6 +1008,13 @@
 			<NTF Codigo="9104507200336352" TCAsociada="30602" FechaVencimiento="08/2028" CCV="9791" />
 			<NTF Codigo="3493211867850104" TCAsociada="59525" FechaVencimiento="12/2028" CCV="6242" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="8429016772760094" Razon="Robo" />
+			<RRP TF="9213739658429116" Razon="Perdida" />
+			<RRP TF="5344200965174520" Razon="Robo" />
+			<RRP TF="6724785747468428" Razon="Perdida" />
+			<RRP TF="4773423078813623" Razon="Perdida" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Compra" TF="2668231324191095" FechaMovimiento="2024-02-21" Monto="8058" Descripcion="En Belén" Referencia="EES2A" />
 			<Movimiento Nombre="Pago en ATM" TF="4286961520207211" FechaMovimiento="2024-02-21" Monto="58657" Descripcion="En Atenas" Referencia="B8PP4" />
@@ -1072,6 +1125,12 @@
 			<NTF Codigo="3956125413987498" TCAsociada="80702" FechaVencimiento="05/2028" CCV="3000" />
 			<NTF Codigo="1632774368241075" TCAsociada="30853" FechaVencimiento="06/2027" CCV="6538" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="8079848409682753" Razon="Robo" />
+			<RRP TF="2934983964740892" Razon="Perdida" />
+			<RRP TF="2383056325654095" Razon="Perdida" />
+			<RRP TF="3938630221335313" Razon="Robo" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Retiro en Ventana" TF="8348133262205011" FechaMovimiento="2024-02-27" Monto="32020" Descripcion="En Esparza" Referencia="W5NW7" />
 			<Movimiento Nombre="Pago en ATM" TF="6418223953029167" FechaMovimiento="2024-02-27" Monto="85824" Descripcion="En Corredores" Referencia="4ILI5" />
@@ -1127,6 +1186,13 @@
 			<NTF Codigo="9725724243560452" TCAsociada="17655" FechaVencimiento="11/2028" CCV="6181" />
 			<NTF Codigo="7084208694684957" TCAsociada="25433" FechaVencimiento="12/2027" CCV="3491" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="6403748893453593" Razon="Robo" />
+			<RRP TF="4829280717705374" Razon="Robo" />
+			<RRP TF="4686287680451589" Razon="Robo" />
+			<RRP TF="3799095584281828" Razon="Perdida" />
+			<RRP TF="8397926207910171" Razon="Perdida" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Pago en Linea" TF="2855446415731838" FechaMovimiento="2024-03-01" Monto="73607" Descripcion="Sucursal en San Ramón" Referencia="I5QB6" />
 			<Movimiento Nombre="Pago en Linea" TF="5655636577940569" FechaMovimiento="2024-03-01" Monto="38086" Descripcion="Walmart en Escazú" Referencia="SB6AL" />
@@ -1237,6 +1303,12 @@
 			<NTF Codigo="6743054565618482" TCAsociada="65558" FechaVencimiento="02/2027" CCV="6232" />
 			<NTF Codigo="6981805159035220" TCAsociada="45608" FechaVencimiento="02/2028" CCV="3978" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="5523277398544432" Razon="Robo" />
+			<RRP TF="8871494930267758" Razon="Perdida" />
+			<RRP TF="2734639002935649" Razon="Robo" />
+			<RRP TF="3770531541243493" Razon="Perdida" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Compra" TF="8371868300839996" FechaMovimiento="2024-03-07" Monto="9631" Descripcion="En Bagaces" Referencia="78L46" />
 			<Movimiento Nombre="Retiro en Ventana" TF="5395554230644494" FechaMovimiento="2024-03-07" Monto="93987" Descripcion="En Belén" Referencia="4LLPY" />
@@ -1292,6 +1364,13 @@
 			<NTF Codigo="4287882342356129" TCAsociada="19348" FechaVencimiento="02/2028" CCV="5813" />
 			<NTF Codigo="7315769238290076" TCAsociada="92938" FechaVencimiento="02/2027" CCV="2361" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="9476385880999579" Razon="Robo" />
+			<RRP TF="7512087167495630" Razon="Perdida" />
+			<RRP TF="7137219698255989" Razon="Perdida" />
+			<RRP TF="1632774368241075" Razon="Robo" />
+			<RRP TF="9104507200336352" Razon="Perdida" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Retiro en ATM" TF="7407888157510632" FechaMovimiento="2024-03-10" Monto="53764" Descripcion="Sucursal en Escazú" Referencia="RWLSO" />
 			<Movimiento Nombre="Retiro en Ventana" TF="2794325256592805" FechaMovimiento="2024-03-10" Monto="71443" Descripcion="ATM de Palmares" Referencia="QFWF6" />
@@ -1567,6 +1646,12 @@
 			<NTF Codigo="7553096916005915" TCAsociada="39493" FechaVencimiento="09/2027" CCV="7361" />
 			<NTF Codigo="1414200123206117" TCAsociada="34834" FechaVencimiento="06/2028" CCV="1731" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="8360060851961056" Razon="Robo" />
+			<RRP TF="7188186863203049" Razon="Perdida" />
+			<RRP TF="9078479609413928" Razon="Robo" />
+			<RRP TF="4928673755936864" Razon="Robo" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Pago en ATM" TF="9585994043536904" FechaMovimiento="2024-03-25" Monto="10159" Descripcion="Sucursal en Montes de Oca" Referencia="QMCHH" />
 			<Movimiento Nombre="Pago en Ventana" TF="3488477239742811" FechaMovimiento="2024-03-25" Monto="24711" Descripcion="ATM de Liberia" Referencia="F2O3K" />
@@ -1622,6 +1707,13 @@
 			<NTF Codigo="6897740828949604" TCAsociada="41370" FechaVencimiento="12/2027" CCV="9246" />
 			<NTF Codigo="6741049758027841" TCAsociada="65288" FechaVencimiento="03/2028" CCV="5278" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="4590694263597421" Razon="Robo" />
+			<RRP TF="2780431019869671" Razon="Perdida" />
+			<RRP TF="8867086233379730" Razon="Perdida" />
+			<RRP TF="4359235581061688" Razon="Robo" />
+			<RRP TF="4757901931775536" Razon="Robo" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Pago en Ventana" TF="4942959873940953" FechaMovimiento="2024-03-28" Monto="58578" Descripcion="Walmart en San Carlos" Referencia="010LT" />
 			<Movimiento Nombre="Retiro en Ventana" TF="2668231324191095" FechaMovimiento="2024-03-28" Monto="83442" Descripcion="ATM de Pavas" Referencia="IAUP6" />
@@ -1677,6 +1769,11 @@
 			<NTF Codigo="3780555828234399" TCAsociada="25195" FechaVencimiento="10/2027" CCV="6925" />
 			<NTF Codigo="6625664634627600" TCAsociada="71121" FechaVencimiento="06/2027" CCV="2120" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="2345358150451794" Razon="Robo" />
+			<RRP TF="4910999679190851" Razon="Perdida" />
+			<RRP TF="4287882342356129" Razon="Perdida" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Pago en ATM" TF="5655636577940569" FechaMovimiento="2024-04-01" Monto="69011" Descripcion="ATM de San José" Referencia="I808Z" />
 			<Movimiento Nombre="Retiro en Ventana" TF="5525247354599728" FechaMovimiento="2024-04-01" Monto="80948" Descripcion="En Upala" Referencia="JLRLJ" />
@@ -1787,6 +1884,12 @@
 			<NTF Codigo="4430478229753758" TCAsociada="85037" FechaVencimiento="06/2027" CCV="4232" />
 			<NTF Codigo="1853233769030144" TCAsociada="32451" FechaVencimiento="09/2026" CCV="2900" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="2306839531794893" Razon="Robo" />
+			<RRP TF="3126514500835141" Razon="Perdida" />
+			<RRP TF="1083104045834518" Razon="Perdida" />
+			<RRP TF="7175461841853279" Razon="Robo" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Pago en Linea" TF="5373571423133445" FechaMovimiento="2024-04-07" Monto="63573" Descripcion="En Curridabat" Referencia="KYTCD" />
 			<Movimiento Nombre="Retiro en ATM" TF="6582011518402719" FechaMovimiento="2024-04-07" Monto="12339" Descripcion="ATM de Liberia" Referencia="BZVUV" />
@@ -2062,6 +2165,13 @@
 			<NTF Codigo="1679726382242790" TCAsociada="97234" FechaVencimiento="04/2028" CCV="8756" />
 			<NTF Codigo="7914681338273889" TCAsociada="80589" FechaVencimiento="10/2028" CCV="6227" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="4399652347375716" Razon="Perdida" />
+			<RRP TF="5969245668802113" Razon="Perdida" />
+			<RRP TF="8552559090805832" Razon="Robo" />
+			<RRP TF="9345102998343976" Razon="Robo" />
+			<RRP TF="1395313975225298" Razon="Perdida" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Compra" TF="2383056325654095" FechaMovimiento="2024-04-22" Monto="95494" Descripcion="ATM de Liberia" Referencia="T4UD0" />
 			<Movimiento Nombre="Pago en Ventana" TF="6418223953029167" FechaMovimiento="2024-04-22" Monto="96477" Descripcion="Walmart en Pavas" Referencia="RG4V2" />
@@ -2117,6 +2227,12 @@
 			<NTF Codigo="9434330390042636" TCAsociada="52865" FechaVencimiento="03/2028" CCV="4442" />
 			<NTF Codigo="2781240656175133" TCAsociada="68953" FechaVencimiento="09/2027" CCV="4894" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="2659842390606468" Razon="Perdida" />
+			<RRP TF="7552559479645753" Razon="Perdida" />
+			<RRP TF="8580494679252361" Razon="Robo" />
+			<RRP TF="9606116239584014" Razon="Robo" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Pago en Linea" TF="7137219698255989" FechaMovimiento="2024-04-25" Monto="28834" Descripcion="Walmart en Pavas" Referencia="HX1P7" />
 			<Movimiento Nombre="Pago en Ventana" TF="9585994043536904" FechaMovimiento="2024-04-25" Monto="29707" Descripcion="Walmart en Coronado" Referencia="4P28O" />
@@ -2172,6 +2288,13 @@
 			<NTF Codigo="1764248486060269" TCAsociada="76940" FechaVencimiento="06/2026" CCV="4927" />
 			<NTF Codigo="8771352618930903" TCAsociada="66946" FechaVencimiento="12/2027" CCV="4480" />
 		</NTF>
+		<RenovacionRoboPerdida>
+			<RRP TF="7138407337257722" Razon="Robo" />
+			<RRP TF="4165165443473599" Razon="Robo" />
+			<RRP TF="3956125413987498" Razon="Robo" />
+			<RRP TF="6743054565618482" Razon="Perdida" />
+			<RRP TF="3271571482980233" Razon="Perdida" />
+		</RenovacionRoboPerdida>
 		<Movimiento>
 			<Movimiento Nombre="Retiro en Ventana" TF="7138407337257722" FechaMovimiento="2024-04-28" Monto="35360" Descripcion="En Esparza" Referencia="CQ10S" />
 			<Movimiento Nombre="Retiro en ATM" TF="1024221161988034" FechaMovimiento="2024-04-28" Monto="91284" Descripcion="En Ciudad Colón" Referencia="9WIRT" />
