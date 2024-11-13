@@ -8,6 +8,8 @@ namespace CapaUtilitario.clTarjetas
 {
     public class TCM
     {
+
+        public int ID { get; set; }
         public string NumeroTarjeta { get; set; }
         public DateTime Fecha { get; set; }
         public decimal PagoMinimo { get; set; }

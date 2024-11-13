@@ -222,11 +222,11 @@ namespace CapaDatos.Tarjetas
         }
 
 
-        public List<clMovimiento> ListarMovimientos(SqlConnectionStringBuilder connectionString)
+        public List<clMovimiento> ListarMovimientos(SqlConnectionStringBuilder connectionString, string codigoTF, string codigoEstado, string Tipo)
         {
             List<clMovimiento> listaOrdenes = new List<clMovimiento>();
 
-            string command = "dbo.Nombre";
+            string command = "dbo.SP_ListadoDetalleEC";
 
             using (SqlConnection conn = new SqlConnection(connectionString.ConnectionString))
             {
@@ -234,7 +234,16 @@ namespace CapaDatos.Tarjetas
                 using (SqlCommand comando = new SqlCommand(command, conn))
                 {
                     comando.CommandType = System.Data.CommandType.StoredProcedure;
-                    //comando.Parameters.AddWithValue("@Conjunto", esquema);
+                    comando.Parameters.AddWithValue("@inCodigoTF", codigoTF);
+
+                    if (Tipo == "TCM")
+                    {
+                        comando.Parameters.AddWithValue("@inIdEstadoCuenta", codigoEstado);
+                    }
+                    else
+                    {
+                        comando.Parameters.AddWithValue("@inIdSubEstadoCuenta", codigoEstado);
+                    }
 
                     SqlParameter outResultCode = new SqlParameter("@outResultCode", System.Data.SqlDbType.VarChar, 50)
                     {

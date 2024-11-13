@@ -71,18 +71,20 @@ namespace SistemaTarjetaCredito.Controllers
         public IActionResult TCA(string codigo)
         {
             var VTCA = dbTarjeta.ListarTCA(conexionString, codigo);
+            ViewBag.Codigo = codigo;
             return View(VTCA);
         }
 
         public IActionResult TCM(string codigo)
         {
              var VTCM = dbTarjeta.ListarTCM(conexionString, codigo);
+            ViewBag.Codigo = codigo;
             return View(VTCM);
         }
 
-        public IActionResult Movimiento()
+        public IActionResult Movimiento(string codigoTF, string codigoEstado, string Tipo)
         {
-            var VMovimiento = dbTarjeta.ListarMovimientos(conexionString);
+            var VMovimiento = dbTarjeta.ListarMovimientos(conexionString, codigoTF, codigoEstado, Tipo);
             return View(VMovimiento);
         }
 

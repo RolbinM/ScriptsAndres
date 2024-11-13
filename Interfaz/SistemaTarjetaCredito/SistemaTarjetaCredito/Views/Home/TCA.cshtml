@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "TCA";
+    var TF = ViewBag.Codigo;
 }
 
 
@@ -35,7 +36,7 @@
                             <td>@Tarjeta.CantidadRetiros</td>
                             <td>@Tarjeta.SumaRetiros</td>
                             <td>
-                                <button class="btn btn-success btn-sm" title="Info" onclick="info('TCA')">
+                                <button class="btn btn-success btn-sm" title="Info" onclick="info('@TF','@Tarjeta.ID','TCA')">
                                     <i class="fas fa-info"></i>
                                 </button>
                                 <button class="btn btn-danger btn-sm" title="Eliminar" onclick="eliminar()">
@@ -86,70 +87,11 @@
     });
  
 
-    function editar(orden, estado) {
-        var url;
+ 
 
-        if (estado === 'Cotización') {
-            // Generar la URL para la acción Cotizacion en el controlador OrdenTrabajo
-            url = '@Url.Action("Cotizacion", "OrdenTrabajo")' + '?consecutivo=' + encodeURIComponent(orden);
-        } else {
-            // Generar la URL para la acción EditarOrden en el controlador OrdenTrabajo
-            url = '@Url.Action("OrdenTrabajoP", "OrdenTrabajo")' + '?orden=' + encodeURIComponent(orden);
-        }
+    function info(codTf, codID,Tipo) {
 
-        // Redirigir al usuario a la URL construida
-        window.location.href = url;
-    }
-
-    function eliminar(orden, ) {
-        // Mostrar el diálogo de confirmación con SweetAlert
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¿Quieres eliminar este registro?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Sí, eliminarlo',
-            cancelButtonText: 'Cancelar'
-        }).then((result) => {
-            // Si el usuario confirma la eliminación
-            if (result.isConfirmed) {
-
-                $.ajax({
-                    url: '@Url.Action("EliminarOrdenTrabajo", "OrdenTrabajo")',
-                    type: "POST",
-                    data: {
-                        inConsecutivoOrden: orden
-                    },
-                    beforeSend: function () {
-
-                    },
-                    success: function (data) {
-                        
-                        if(data === 0){
-                            var fila = tabla.row($('tr:contains(' + orden + ')')).remove().draw(false);
-
-                            Swal.fire('¡Eliminado!', 'El registro ha sido eliminado.', 'success');
-                        }
-                    },
-                    error: function (error) {
-                        Swal.fire({
-                            icon: "warning",
-                            html: "Ocurrió un error al enviar el correo"
-                        });
-                    },
-                    complete: function () {
-
-                    }
-                });
-                
-            }
-        });
-    }
-
-    function info() {
-         window.location.href = '@Url.Action("Movimiento", "Home")' ;
+        window.location.href = '@Url.Action("Movimiento", "Home")' + '?codigoTF=' + encodeURIComponent(codTf) + '&codigoEstado=' + encodeURIComponent(codID) + '&Tipo=' + encodeURIComponent(Tipo);
     }
     
 
