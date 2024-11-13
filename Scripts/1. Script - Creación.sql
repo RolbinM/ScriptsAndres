@@ -243,6 +243,7 @@ GO
 CREATE TABLE EstadoCuenta (
     id INT PRIMARY KEY IDENTITY(1,1)
     , idTCM INT FOREIGN KEY REFERENCES TCM(id)
+    , FechaCreacion DATE
     , FechaCorte DATE
     , SaldoAlCorte MONEY
     , PagoMinimoMesAnterior MONEY
@@ -268,6 +269,7 @@ CREATE TABLE EstadoCuenta (
 CREATE TABLE SubEstadoCuenta (
     id INT PRIMARY KEY IDENTITY(1,1)
     , idTCA INT FOREIGN KEY REFERENCES TCA(id)
+    , FechaCreacion DATE
     , FechaCorte DATE
     , OperacionesATM INT
     , OperacionesVentanilla INT

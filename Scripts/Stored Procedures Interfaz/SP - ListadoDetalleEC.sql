@@ -13,10 +13,14 @@ BEGIN
 	BEGIN TRY
 		SET @outResultCode = 0;
 
-	-- Para determinar el estado de cuenta a listar entonces hay que obtener los movimientos realizados en un cierto rango de fechas
-	-- Por lo que hay que agregar el campo "FechaCreacion" a la tabla EstadoCuenta
+		-- Para determinar el estado de cuenta a listar entonces hay que obtener los movimientos realizados en un cierto rango de fechas
+		-- Por lo que hay que agregar el campo "FechaCreacion" a la tabla EstadoCuenta
 
-	-- Lo mismo para la tabla SubEstadoCuenta
+		-- Lo mismo para la tabla SubEstadoCuenta
+
+		DECLARE idTF INT = (SELECT idTF FROM TF WHERE Codigo = @inCodigoTF);
+
+		
 
 
 	END TRY
