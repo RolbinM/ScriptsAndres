@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SistemaTarjetaCredito", "SistemaTarjetaCredito\SistemaTarjetaCredito.csproj", "{DF3A8130-9037-418A-AA17-A2E6A9BE4060}"
+	ProjectSection(ProjectDependencies) = postProject
+		{596D1786-51BB-41F5-AECA-61AA251D554F} = {596D1786-51BB-41F5-AECA-61AA251D554F}
+		{EF516F05-A62B-49E5-8262-0400C9522636} = {EF516F05-A62B-49E5-8262-0400C9522636}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CapaDatos", "CapaDatos\CapaDatos.csproj", "{596D1786-51BB-41F5-AECA-61AA251D554F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EF516F05-A62B-49E5-8262-0400C9522636} = {EF516F05-A62B-49E5-8262-0400C9522636}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CapaUtilitario", "CapaUtilitario\CapaUtilitario.csproj", "{EF516F05-A62B-49E5-8262-0400C9522636}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF3A8130-9037-418A-AA17-A2E6A9BE4060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF3A8130-9037-418A-AA17-A2E6A9BE4060}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF3A8130-9037-418A-AA17-A2E6A9BE4060}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF3A8130-9037-418A-AA17-A2E6A9BE4060}.Release|Any CPU.Build.0 = Release|Any CPU
+		{596D1786-51BB-41F5-AECA-61AA251D554F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{596D1786-51BB-41F5-AECA-61AA251D554F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{596D1786-51BB-41F5-AECA-61AA251D554F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{596D1786-51BB-41F5-AECA-61AA251D554F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF516F05-A62B-49E5-8262-0400C9522636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF516F05-A62B-49E5-8262-0400C9522636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF516F05-A62B-49E5-8262-0400C9522636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF516F05-A62B-49E5-8262-0400C9522636}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4426CBAD-A35D-4060-95B8-DA25A21733AC}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,87 @@
+# Ignore build results
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.ilk
+*.log
+*.vspscc
+*.vssscc
+*.suo
+*.user
+*.tt
+*.rsuser
+*.nupkg
+*.localhistory/
+.vscode/
+
+# Ignore Web.config and app settings if they contain sensitive data
+appsettings.json
+appsettings.*.json
+
+# Ignore Visual Studio specific files
+.vscode/
+.vs/
+.env
+*.swp
+*.sln.docstates
+.project
+.idea/
+
+# Ignore ReSharper and Rider files
+_ReSharper*/
+*.[Dd]otSettings.user
+
+# Ignore NuGet packages
+*.nupkg
+# Uncomment if using NuGet Package Manager
+# packages/
+
+# Ignore Publish files
+publish/
+out/
+TestResults/
+TestResult.xml
+
+# Ignore Rider settings directory
+.idea/
+.idea_modules/
+.idea/workspace.xml
+.idea/.idea
+
+# Ignore logs and database files
+*.log
+*.mdf
+*.ldf
+db.lock
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Microsoft Office temporary files
+~$*
+~*.tmp
+
+# IIS Express SSL cert
+.ssl/
+
+# User-specific files
+*.rsuser
+*.sln.docstates
+
+# Mac and Linux files
+.DS_Store
+*.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+*~
+
+# IDE specific files
+.vscode/

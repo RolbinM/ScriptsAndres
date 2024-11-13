@@ -1,0 +1,175 @@
+﻿* {
+    font-family: 'Poppins', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.mainContainer{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#contenedorCarga {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+.botones {
+    margin-top: 2em;
+}
+
+    .botones p {
+        font-size: 1em;
+        font-weight: 600;
+        color: #468189;
+    }
+
+.btn-primary {
+    background-color: white !important;
+    border: 1.5px solid #0054ffed !important;
+    color: #0054ffed !important;
+}
+
+    .btn-primary:hover {
+        background-color: #0054ffed !important;
+        color: white !important;
+    }
+
+.btn-warning {
+    background-color: white !important;
+    border: 1.5px solid #ffc107 !important;
+    color: #ffc107 !important;
+}
+
+    .btn-warning:hover {
+        background-color: #ffc107 !important;
+        color: white !important;
+    }
+
+.btn-danger {
+    background-color: white !important;
+    border: 1.5px solid #c82333 !important;
+    color: #c82333 !important;
+}
+
+    .btn-danger:hover {
+        background-color: #c82333 !important;
+        color: white !important;
+    }
+
+.botones .btn {
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.btnhoverInputGroup {
+    background-color: #468189 !important;
+    color: #FFFFFF;
+    outline: none;
+    width: 100%;
+    border-radius: 0px 5px 5px 0px;
+}
+
+    .btnhoverInputGroup:hover {
+        background-color: #426da9 !important;
+        color: #FFFFFF !important;
+    }
+
+
+.btnhoverOption {
+    background-color: #468189 !important;
+    color: #FFFFFF;
+    margin-left: 5%;
+    border-radius: 5px 5px 5px 5px;
+}
+
+    .btnhoverOption:hover {
+        background-color: #426da9 !important;
+        color: #FFFFFF !important;
+    }
+
+
+.btnhover {
+    background-color: #468189 !important;
+    color: #FFFFFF;
+    width: 100%
+}
+
+    .btnhover:hover {
+        background-color: #426da9 !important;
+        color: #FFFFFF !important;
+    }
+
+
+.btnhoverSecundario {
+    background-color: white;
+    border: 2px solid #E3EBF7 !important;
+    border-radius: 4px;
+    color: #468189;
+}
+
+    .btnhoverSecundario:hover {
+        background-color: #E3EBF7 !important;
+        color: #468189 !important;
+    }
+
+.iconos .col-xs-12 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2em;
+}
+
+.btnEliminar {
+    background-color: white;
+    border: 2px solid !important;
+    border-radius: 4px;
+    color: #DC4C64;
+}
+
+    .btnEliminar:hover {
+        background-color: #DC4C64 !important;
+        color: #FFFFFF !important;
+        border-color: #DC4C64 !important;
+    }
+
+.iconos i {
+    color: #468189;
+    font-size: 2em;
+}
+
+#copyright {
+    font-size: 1em;
+}
+
+
+.btn-close {
+    border-radius: 50px;
+    padding: 3px 10px;
+    border: 1.5px solid #0054ffed;
+    background-color: white;
+    color: #0054ffed;
+}
+
+    .btn-close:hover {
+        background-color: #0054ffed;
+        color: white;
+    }
+
+
+/* Estilo para indicar que una fila está seleccionada */
+#CuerpoTablaProveedores tr.selected {
+    background-color: rgba(255, 235, 59, 0.33) !important; /* Color de fondo */
+    box-shadow: inset 0 0 0 9999px rgba(255, 235, 59, 0.33) !important; /* Color de sombra */
+}
+
+    /* Sobrescribir el estilo de Bootstrap cuando la fila esté seleccionada y se pase el mouse */
+    #CuerpoTablaProveedores tr.selected:hover {
+        box-shadow: inset 0 0 0 9999px rgba(255, 235, 59, 0.33) !important; /* Color de sombra */
+    }

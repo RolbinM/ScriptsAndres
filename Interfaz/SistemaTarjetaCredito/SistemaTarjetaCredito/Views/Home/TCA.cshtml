@@ -1,0 +1,157 @@
+﻿@using CapaUtilitario.clTarjetas
+@model List<TCA>
+
+@{
+    ViewData["Title"] = "TCA";
+}
+
+
+
+    <div class="row">
+
+            <table id="Tabla" class="display nowrap" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <td>Fecha</td>
+                        <td>Cantidad Operaciones ATM</td>
+                        <td>Cantidad Operaciones Ventanilla</td>
+                        <td>Cantidad de Compras</td>
+                        <td>Suma de Compras</td>
+                        <td>Cantidad de Retiros</td>
+                        <td>Suma de Retiros</td>
+                        <td>Acciones</td>
+                    </tr>
+                </thead>
+                <tbody id="Cuerpo Tabla">
+
+                    @foreach (var Tarjeta in Model)
+                    {
+                        <tr>
+                            <td>@Tarjeta.Fecha</td>
+                            <td>@Tarjeta.CantidadOperacionesATM</td>
+                            <td>@Tarjeta.CantidadOperacioneVentanilla</td>
+                            <td>@Tarjeta.CantidadCompras</td>
+                            <td>@Tarjeta.SumaCompras</td>
+                            <td>@Tarjeta.CantidadRetiros</td>
+                            <td>@Tarjeta.SumaRetiros</td>
+                            <td>
+                                <button class="btn btn-success btn-sm" title="Info" onclick="info('TCA')">
+                                    <i class="fas fa-info"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" title="Eliminar" onclick="eliminar()">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+
+                            </td>
+                        </tr>
+
+                    }
+                    
+    
+
+                    
+
+                </tbody>
+            </table>
+        </div>
+   
+
+
+
+<script>
+
+    var tabla = $('#Tabla').DataTable({
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+
+        },
+        scrollX: true
+    });
+ 
+
+    function editar(orden, estado) {
+        var url;
+
+        if (estado === 'Cotización') {
+            // Generar la URL para la acción Cotizacion en el controlador OrdenTrabajo
+            url = '@Url.Action("Cotizacion", "OrdenTrabajo")' + '?consecutivo=' + encodeURIComponent(orden);
+        } else {
+            // Generar la URL para la acción EditarOrden en el controlador OrdenTrabajo
+            url = '@Url.Action("OrdenTrabajoP", "OrdenTrabajo")' + '?orden=' + encodeURIComponent(orden);
+        }
+
+        // Redirigir al usuario a la URL construida
+        window.location.href = url;
+    }
+
+    function eliminar(orden, ) {
+        // Mostrar el diálogo de confirmación con SweetAlert
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¿Quieres eliminar este registro?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminarlo',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            // Si el usuario confirma la eliminación
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    url: '@Url.Action("EliminarOrdenTrabajo", "OrdenTrabajo")',
+                    type: "POST",
+                    data: {
+                        inConsecutivoOrden: orden
+                    },
+                    beforeSend: function () {
+
+                    },
+                    success: function (data) {
+                        
+                        if(data === 0){
+                            var fila = tabla.row($('tr:contains(' + orden + ')')).remove().draw(false);
+
+                            Swal.fire('¡Eliminado!', 'El registro ha sido eliminado.', 'success');
+                        }
+                    },
+                    error: function (error) {
+                        Swal.fire({
+                            icon: "warning",
+                            html: "Ocurrió un error al enviar el correo"
+                        });
+                    },
+                    complete: function () {
+
+                    }
+                });
+                
+            }
+        });
+    }
+
+    function info() {
+         window.location.href = '@Url.Action("Movimiento", "Home")' ;
+    }
+    
+
+
+</script>

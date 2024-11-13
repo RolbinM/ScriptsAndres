@@ -1,0 +1,98 @@
+﻿@using CapaUtilitario.clTarjetas
+@model List<Tarjeta>
+
+@{
+    ViewData["Title"] = "Lista Tarjetas";
+}
+
+
+
+
+    <div class="row">
+      
+            <table id="Tabla" class="display nowrap" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <td>Numero</td>
+                        <td>Estado</td>
+                        <td>Tipo de cuenta</td>
+                        <td>Fecha Creación</td>
+                        <td>Fecha vencimiento</td>
+                        <td>Acciones</td>
+                    </tr>
+                </thead>
+                <tbody id="Cuerpo Tabla">
+                    @foreach (var Tarjeta in Model)
+                    {
+                    <tr>
+                        <td>@Tarjeta.NumeroTarjeta</td>
+                        <td>@Tarjeta.Estado</td>
+                        <td>@Tarjeta.TipoCuenta</td>
+                        <td>@Tarjeta.FechaEmision</td>
+                        <td>@Tarjeta.FechaVencimiento</td>
+                        <td>
+                        <button class="btn btn-success btn-sm" title="Info" onclick="info('@Tarjeta.TipoCuenta','@Tarjeta.NumeroTarjeta')">
+                                <i class="fas fa-info"></i>
+                            </button>
+
+
+                        </td>
+                    </tr>
+                    }
+
+                    
+                    
+
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+<script>
+
+    var tabla = $('#Tabla').DataTable({
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+
+        },
+        scrollX: true
+    });
+ 
+
+
+ 
+
+    function info(Tipo, codigo) {
+
+        var url;
+        if (Tipo == 'TCA') {
+            url = '@Url.Action("TCA", "Home")' + '?codigo=' + encodeURIComponent(codigo);
+        } else {
+            url = '@Url.Action("TCM", "Home")' + '?codigo=' + encodeURIComponent(codigo);
+        }
+
+        window.location.href = url;
+    }
+    
+
+
+</script>

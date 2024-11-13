@@ -1,0 +1,141 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Login";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>IPB | Ingreso</title>
+
+    <!-- CSS de fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+
+    <!-- CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- Local style -->
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/css/loginStyle.css">
+</head>
+<body class="login-page fondo" style="display: flex; align-items: center;">
+    <div class="login-box" style="margin-left: auto; margin-right: auto;">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <img src="~/img/Logo.png" alt="Logo Compañía" width="400" height="300" style="margin-left: -30px" />
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Conéctese para iniciar su sesión</p>
+                <form action="javascript:;" enctype="multipart/form-data" onsubmit="iniciarSesion()">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="Usuario" placeholder="Usuario..." required />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" id="Clave" placeholder="Contraseña..." required />
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-md-center">
+                        <h6 id="Error" style="color: red;" hidden>
+                            Usuario y/o Contraseña inválida.
+                        </h6>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" id="btnLogin" class="btn btn-primary btn-block btnAgregarPedido">Conectarse</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.login-box -->
+    <!-- Boostrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- SweetAlert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/41bcea2ae3.js" crossorigin="anonymous"></script>
+
+    <!-- Funciones del Sitio-->
+    <script src="~/js/site.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // Funcionalidad que valida los datos de entrada para iniciar sesión en el sistema
+            function iniciarSesion() {
+                var Usuario = $("#Usuario").val();
+                var Contra = $("#Clave").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("login", "Home")',
+                    data: { inUsuario: Usuario, inContrasena: Contra },
+                    beforeSend: function () {
+                        // Aquí puedes añadir una indicación de carga si es necesario
+                    },
+                    success: function (result) {
+                        try {
+                            if (result == 1 || result == 2) {
+                                $("#Usuario").val("");
+                                $("#Clave").val("");
+
+                                var url;
+                                if (result == 2) {
+                                    url = "@Url.Action("ListaTarjetas", "Home")";
+                                } else {
+                                    url = "@Url.Action("ListaTarjetasAdmin", "Home")";
+                                }
+
+                                window.location = url;
+                                $("#Error").attr("hidden", true);
+                            } else {
+                                $("#Error").attr("hidden", false);
+                            }
+                        } catch (error) {
+                            Swal.fire({
+                                icon: 'error',
+                                html: '<h5>Error al iniciar sesión</h5>'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            html: '<h5>Error al iniciar sesión</h5>'
+                        });
+                    }
+                });
+            }
+
+            // Asociar la función al evento onsubmit del formulario
+            $("form").on("submit", function (event) {
+                event.preventDefault(); // Evitar el envío tradicional del formulario
+                iniciarSesion(); // Llamar a la función iniciarSesion
+            });
+        });
+    </script>
+
+
+</body>
+</html>
