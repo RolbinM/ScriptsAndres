@@ -49,7 +49,10 @@ DROP PROCEDURE IF EXISTS [dbo].[SP_InsertarLoteMovimientos]
 DROP PROCEDURE IF EXISTS [dbo].[SP_InsertarMovimiento]
 DROP PROCEDURE IF EXISTS [dbo].[SP_InsertarMovimientoSospechoso]
 DROP TYPE IF EXISTS dbo.MovimientoVariable;
+DROP TYPE IF EXISTS dbo.TFReposicionVariable;
 DROP TYPE IF EXISTS dbo.MovimientoTemporal;
+
+
 
 
 
@@ -223,6 +226,13 @@ CREATE TYPE dbo.MovimientoVariable AS TABLE (
     Referencia VARCHAR(100),
 	Procesado BIT DEFAULT 0,
 	NuevoSaldo MONEY
+);
+
+GO
+CREATE TYPE dbo.TFReposicionVariable AS TABLE (
+    FechaOperacion DATETIME,
+    Razon VARCHAR(100),
+    TF VARCHAR(100)
 );
 
 GO

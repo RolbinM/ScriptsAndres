@@ -51,11 +51,12 @@ BEGIN
 				CCV VARCHAR(25)
 			)
 
-			DECLARE @Movimiento dbo.MovimientoVariable
+			DECLARE @MovimientosReposicionTF dbo.TFReposicionVariable
+			DECLARE @MovimientosReposicionTFLote dbo.TFReposicionVariable
 
+			DECLARE @Movimiento dbo.MovimientoVariable
 			DECLARE @MovimientosLote dbo.MovimientoVariable
-			DECLARE @MovimientosRenovacionTF dbo.MovimientoVariable
-			DECLARE @MovimientosReposicionTF dbo.MovimientoVariable
+			
 
 			DECLARE @FechaOperacion DATETIME;
 			DECLARE @FechaFinal DATETIME
@@ -183,7 +184,16 @@ BEGIN
 			CROSS APPLY 
 				fechaOperacion.nodes('Movimiento/Movimiento') AS MovimientoData(movimiento);
 
-
+			-- Consulta para extraer Movimientos en todas las fechaOperacion
+			INSERT INTO @MovimientosReposicionTF(FechaOperacion, Razon, TF)
+			SELECT 
+				fechaOperacion.value('@Fecha', 'DATETIME') AS FechaOperacion,
+				movimiento.value('@Razon', 'VARCHAR(100)') AS Razon,
+				movimiento.value('@TF', 'VARCHAR(20)') AS TF
+			FROM 
+				@Datos.nodes('/root/fechaOperacion') AS Fecha(fechaOperacion)
+			CROSS APPLY 
+				fechaOperacion.nodes('RenovacionRoboPerdida/RRP') AS MovimientoData(movimiento);
 
 
 			/* PRUEBAS */
@@ -193,6 +203,7 @@ BEGIN
 			--SELECT * FROM @NTCA
 			--SELECT * FROM @NTF
 			--SELECT * FROM @Movimiento
+			--SELECT * FROM @MovimientosReposicionTF
 
 
 
@@ -303,34 +314,32 @@ BEGIN
 
 
 				
-				-- Sacamos el lote de movimientos de la fechaOperacion
-				INSERT INTO @MovimientosLote(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
-				SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
-				FROM @Movimiento
-				WHERE FechaOperacion = @FechaOperacion AND Nombre IN ('Compra', 'Retiro en ATM', 'Pago en ATM', 'Retiro en Ventana', 'Pago en Ventana', 'Pago en Linea', 'Cargos por Servicio', 'Cargos por Multa Exceso Uso ATM', 'Cargos por Multa Exceso Uso Ventana');
+				---- Sacamos el lote de movimientos de la fechaOperacion
+				--INSERT INTO @MovimientosLote(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
+				--SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
+				--FROM @Movimiento
+				--WHERE FechaOperacion = @FechaOperacion 
 
-				EXEC dbo.SP_InsertarLoteMovimientos @MovimientosLote, @outResultCode;
-				DELETE FROM @MovimientosLote
+				--EXEC dbo.SP_InsertarLoteMovimientos @MovimientosLote, @outResultCode;
+				--DELETE FROM @MovimientosLote
 
-				/*
+				
 				-- Sacamos el lote de reposicion de tf de la fechaOperacion
-				INSERT INTO @MovimientosReposicionTF(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
-				SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
-				FROM @Movimiento
-				WHERE FechaOperacion = @FechaOperacion AND Nombre IN ('Recuperacion por Perdida', 'Recuperacion por Robo');
+				INSERT INTO @MovimientosReposicionTFLote(FechaOperacion, Razon, TF)
+				SELECT FechaOperacion, Razon, TF
+				FROM @MovimientosReposicionTF
+				WHERE FechaOperacion = @FechaOperacion
 
-				EXEC dbo.SP_ReposicionLoteTarjetaFisica @MovimientosReposicionTF, @outResultCode;
-				DELETE FROM @MovimientosReposicionTF*/
+				EXEC dbo.SP_ReposicionLoteTarjetaFisica @MovimientosReposicionTFLote, 0;
+				DELETE FROM @MovimientosReposicionTFLote
 
 
-				-- Sacamos el lote de reposicion de tf de la fechaOperacion
-				INSERT INTO @MovimientosRenovacionTF(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
-				SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
-				FROM @Movimiento
-				WHERE FechaOperacion = @FechaOperacion AND Nombre IN ('Renovacion de TF');
 
-				-- EXEC dbo.SP_RenovacionLoteTarjetaFisica @MovimientosRenovacionTF, @outResultCode;
-				DELETE FROM @MovimientosRenovacionTF
+
+
+
+				/*Ejecución de renovaciones de tarjeta*/
+				EXEC dbo.SP_RenovacionLoteTarjetaFisica @FechaOperacion, @outResultCode;
 
 
 				SELECT @FechaOperacion = DATEADD(DAY, 1, @FechaOperacion)
