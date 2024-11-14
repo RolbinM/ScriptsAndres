@@ -3,10 +3,10 @@ USE BD1_TP3;
 GO
 CREATE OR ALTER PROCEDURE SP_ListadoDetalleEC
 (
-	@inIdEstadoCuenta INT
-	, @inIdSubEstadoCuenta INT
-	, @inCodigoTF VARCHAR(16)
-	, @outResultCode INT OUTPUT
+    @inIdEstadoCuenta INT = NULL
+    , @inIdSubEstadoCuenta INT = NULL
+    , @inCodigoTF VARCHAR(16)
+    , @outResultCode INT OUTPUT
 )
 AS
 BEGIN
@@ -20,43 +20,28 @@ BEGIN
 		-- Lo mismo para la tabla SubEstadoCuenta
 
 		DECLARE @idTF INT = (SELECT idTF FROM TF WHERE Codigo = @inCodigoTF);
-
-		SELECT 
-			Fecha
-			, TM.Nombre
-			, Descripcion
-			, Referencia
-			, Monto
-			, NuevoSaldo
-		FROM Movimientos M
-		INNER JOIN TipoMovimiento TM ON TM.id = M.idTipoMovimiento
-		WHERE
-			idTF = @idTF
-		AND
-			Fecha BETWEEN (SELECT FechaCreacion FROM EstadoCuenta WHERE id = @inIdEstadoCuenta)
-		AND
-			(SELECT FechaCorte FROM EstadoCuenta WHERE id = @inIdEstadoCuenta)
-
-		UNION ALL
-
-		SELECT 
-			Fecha
-			, TM.Nombre
-			, Descripcion
-			, Referencia
-			, Monto
-			, NuevoSaldo
-		FROM Movimientos M
-		INNER JOIN TipoMovimiento TM ON TM.id = M.idTipoMovimiento
-		WHERE
-			idTF = @idTF
-		AND
-			Fecha BETWEEN (SELECT FechaCreacion FROM SubEstadoCuenta WHERE id = @inIdSubEstadoCuenta)
-		AND
-			(SELECT FechaCorte FROM SubEstadoCuenta WHERE id = @inIdSubEstadoCuenta)
 		
-
+		SELECT 
+			Fecha
+			, TM.Nombre AS TipoMovimiento
+			, Descripcion
+			, Referencia
+			, Monto
+			, NuevoSaldo
+		FROM Movimientos M
+		INNER JOIN TipoMovimiento TM ON TM.id = M.idTipoMovimiento
+		WHERE
+			idTF = @idTF
+		AND
+			(
+				(Fecha BETWEEN (SELECT FechaCreacion FROM EstadoCuenta WHERE id = @inIdEstadoCuenta)
+				AND (SELECT FechaCorte FROM EstadoCuenta WHERE id = @inIdEstadoCuenta))
+				OR
+				(Fecha BETWEEN (SELECT FechaCreacion FROM SubEstadoCuenta WHERE id = @inIdSubEstadoCuenta)
+				AND (SELECT FechaCorte FROM SubEstadoCuenta WHERE id = @inIdSubEstadoCuenta))
+			)
 		ORDER BY Fecha ASC;
+		
 
 	END TRY
 
