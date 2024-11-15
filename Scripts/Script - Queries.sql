@@ -1,4 +1,6 @@
-SELECT * FROM [dbo].[Movimientos];
+SELECT * FROM [dbo].[Movimientos]
+
+UNION ALL
 
 SELECT * FROM [dbo].[MovimientosSospechosos];
 

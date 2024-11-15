@@ -3,7 +3,7 @@ USE BD1_TP3;
 GO
 CREATE OR ALTER PROCEDURE dbo.SP_InsertarLoteMovimientos
 (
-    @Movimientos dbo.MovimientoVariable READONLY, 
+    @Movimientos dbo.MovimientoVariable READONLY, -- Se usa READONLY para que nos permita mandarla por parámetro
     @outResultCode INT OUTPUT
 )
 AS
@@ -20,7 +20,7 @@ BEGIN
 		 @tempNuevoSaldo MONEY;
 
         -- Crear una tabla temporal para almacenar la CTE MovimientosConInfo
-        CREATE TABLE #MovimientosConInfo (
+        DECLARE @MovimientosConInfo TABLE (
             FechaOperacion DATETIME,
             Nombre VARCHAR(100),
             TF VARCHAR(100),
@@ -38,7 +38,7 @@ BEGIN
         );
 
         -- Insertar en la tabla temporal los resultados de la CTE MovimientosConInfo
-        INSERT INTO #MovimientosConInfo
+        INSERT INTO @MovimientosConInfo
         SELECT 
             M.FechaOperacion,
             M.Nombre,
@@ -71,7 +71,7 @@ BEGIN
             0,
             0
         FROM 
-            #MovimientosConInfo
+            @MovimientosConInfo
         WHERE 
             Nombre IN ('Compra', 'Retiro en ATM', 'Pago en ATM', 'Retiro en Ventana', 'Pago en Ventana', 'Pago en Linea') 
 			AND fechaCreacionTF <= FechaMovimiento 
@@ -89,7 +89,7 @@ BEGIN
             0,
             0
         FROM 
-            #MovimientosConInfo
+            @MovimientosConInfo
         WHERE 
             Nombre IN ('Cargos por Servicio', 'Cargos por Multa Exceso Uso ATM', 'Cargos por Multa Exceso Uso Ventana');
 
@@ -104,7 +104,7 @@ BEGIN
             0,
             0
         FROM 
-            #MovimientosConInfo
+            @MovimientosConInfo
         WHERE 
             fechaCreacionTF IS NULL
             OR fechaVencimientoTF IS NULL
@@ -244,6 +244,8 @@ BEGIN
 			FROM @MovimientoTemporal as mt 
 			WHERE  mt.Fecha = @Fecha AND mt.Referencia = @Referencia AND mt.Monto = @Monto
 
+			-- Se usa @@ROWCOUNT porque se está haciendo carga masiva y nos sirve para ver las líneas
+			-- que se han insertado hasta este punto.
 			IF @@ROWCOUNT = 0
 			BEGIN
 				-- Si ninguna fila de movimiento temporal se actualiza entonces el registro debe estar en movimientos sospechosos
@@ -257,6 +259,7 @@ BEGIN
 		END
 
 		SET @CurrentRow = 1
+		-- Acá usamos COUNT(*) a pesar de tener un peso en la eficiencia porque así evitamos usar cursores.
 		SELECT @MaxRow = COUNT(*) FROM @TablaDecrementos;
 		--Ciclo par actualizar decrementos
 		WHILE @CurrentRow <= @MaxRow
@@ -309,7 +312,7 @@ BEGIN
 		-- Insertamos los datos en la tabla de tipo definido por el usuario
 		INSERT INTO @tablaMovimientosAjustados (idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo)
 		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporal
-		UNION ALL
+		UNION ALL -- Se usa UNION ALL porque es más eficiente el que es solo UNION
 		SELECT idTF, idTipoMovimiento, Monto, Descripcion, Fecha, Referencia, Procesado, NuevoSaldo FROM @MovimientoTemporalParaEC;
 
 
@@ -334,9 +337,6 @@ BEGIN
 		--SELECT * FROM @TablaIncrementos
 
 
-        -- Elimina la tabla temporal
-        DROP TABLE #MovimientosConInfo;
-
     END TRY
     BEGIN CATCH
         IF @@TRANCOUNT > 0
@@ -358,48 +358,3 @@ BEGIN
     END CATCH
     SET NOCOUNT OFF;
 END;
-GO
-
------PRUEBAS---------------------------------------------------------------------------------------------------------------------------
-/*
-declare @ex MovimientoVariable
-
-INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
-VALUES('2024-01-01','Compra', '5655636577940569', '2040-01-01', '83779', 'ATM de Palmares', '221L1')
-
-VALUES('2024-01-01','Compra', '5655636577940569', '2030-01-01', '83779', 'ATM de Palmares', '18TPD')
-
-INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
-VALUES('2024-01-01','Cargos por Multa Exceso Uso ATM', '5373571423133445', '2027-01-01', '90358', 'En Goicoechea', 'S3W04')
-
-INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
-VALUES('2024-01-01','Recuperacion por Perdida', '5525247354599728', '2025-01-01', '0', 'Sucursal en Cartago', 'EQKNP')
-
-INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
-VALUES('2024-01-01','Compra', '5525247354599728', '2026-01-01', '10000', 'ATM de Palmares', '18MMMD')
-
-INSERT INTO @ex (FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia) 
-VALUES('2024-01-01','Pago en Linea', '7634009855741021', '2024-04-13', '28558', 'Sucursal en Atenas', 'QSRSO')
-
-SELECT * FROM @ex
-
-Declare @code int;
-EXEC SP_InsertarLoteMovimientos @ex, @code OUTPUT;
-
-SELECT * FROM TF as tf WHERE tf.Codigo = 5655636577940569
-SELECT * FROM TF as tf WHERE tf.Codigo = 5373571423133445
-SELECT * FROM TF as tf WHERE tf.Codigo = 5525247354599728
-
-SELECT * FROM TF as tf WHERE id = 2
-select * from TC where id = 6
-select * from TCA where id = 3
-select * from TCM where id = 3
-
-select * from TCM where id = 1
-
-UPDATE TCM
-SET SaldoActual = SaldoActual + 87000
-FROM TCM as tcm
-where tcm.id = 3
-*/
-----------------------------------------------------------------------------------------------------------------------------------------------------------
