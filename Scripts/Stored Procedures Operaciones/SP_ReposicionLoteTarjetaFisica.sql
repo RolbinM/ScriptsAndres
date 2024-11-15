@@ -1,4 +1,5 @@
 USE BD1_TP3;
+
 GO
 CREATE OR ALTER PROCEDURE dbo.SP_ReposicionLoteTarjetaFisica(
     @inMovimientos dbo.TFReposicionVariable READONLY, 

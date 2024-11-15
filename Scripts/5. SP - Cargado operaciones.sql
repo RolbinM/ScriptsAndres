@@ -51,8 +51,8 @@ BEGIN
 				CCV VARCHAR(25)
 			)
 
-			DECLARE @MovimientosReposicionTF dbo.TFReposicionVariable
-			DECLARE @MovimientosReposicionTFLote dbo.TFReposicionVariable
+			DECLARE @MovimientosReposicionTF dbo.TFReposicionVariable;
+			DECLARE @MovimientosReposicionTFLote dbo.TFReposicionVariable;
 
 			DECLARE @Movimiento dbo.MovimientoVariable
 			DECLARE @MovimientosLote dbo.MovimientoVariable
@@ -241,7 +241,6 @@ BEGIN
 
 
 
-
 				-- Iterar sobre la tabla @NTCM para cada FechaOperacion
 				DECLARE NTCMCursor CURSOR FOR
 					SELECT Codigo, TipoTCM, LimiteCredito, TH
@@ -314,14 +313,15 @@ BEGIN
 
 
 				
-				---- Sacamos el lote de movimientos de la fechaOperacion
-				--INSERT INTO @MovimientosLote(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
-				--SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
-				--FROM @Movimiento
-				--WHERE FechaOperacion = @FechaOperacion 
+				-- Sacamos el lote de movimientos de la fechaOperacion
+				INSERT INTO @MovimientosLote(FechaOperacion,Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia)
+				SELECT FechaOperacion, Nombre, TF, FechaMovimiento, Monto, Descripcion, Referencia
+				FROM @Movimiento
+				WHERE FechaOperacion = @FechaOperacion 
 
-				--EXEC dbo.SP_InsertarLoteMovimientos @MovimientosLote, @outResultCode;
-				--DELETE FROM @MovimientosLote
+				--SELECT COUNT(*) FROM @MovimientosLote
+				EXEC dbo.SP_InsertarLoteMovimientos @MovimientosLote, @outResultCode;
+				DELETE FROM @MovimientosLote
 
 				
 				-- Sacamos el lote de reposicion de tf de la fechaOperacion
@@ -377,12 +377,7 @@ BEGIN
 END
 
 /*
-ANDRES
+
 EXEC CargarOperacionesXML @outResultCode=50008, @inRutaXML='C:\Users\AndresMFIT\OneDrive\Principal\Universidad\Semestre II 2024\BD1\Tarea 3\BDI-T3\Resources\OperacionesFinal.xml';
 
-FOFO
-EXEC CargarOperacionesXML @outResultCode=50008, @inRutaXML='E:\Desktop\OperacionesFinal.xml';
-
-ROLBINCITO
-EXEC CargarOperacionesXML @outResultCode=50008, @inRutaXML='C:\OperacionesFinal.xml';
 */

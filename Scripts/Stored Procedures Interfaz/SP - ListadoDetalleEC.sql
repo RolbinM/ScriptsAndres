@@ -19,7 +19,7 @@ BEGIN
 
 		-- Lo mismo para la tabla SubEstadoCuenta
 
-		DECLARE @idTF INT = (SELECT idTF FROM TF WHERE Codigo = @inCodigoTF);
+		DECLARE @idTF INT = (SELECT id FROM TF WHERE Codigo = @inCodigoTF);
 		
 		SELECT 
 			Fecha
